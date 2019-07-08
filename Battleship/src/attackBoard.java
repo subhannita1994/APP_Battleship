@@ -80,9 +80,9 @@ public class attackBoard extends JPanel{
                         boolean lost = game.getP2().isPlayerLost();
                         //change from
                             if (lost) {
-                                game.setState(game.getEndOfTheGame());
                                 JOptionPane.showMessageDialog(panel, "You(player 1) WON! Congratulations!\nClick OK will Exit the game");
-                                game.p1play(game);
+                                System.out.println("end of the game player 1 ");
+                                System.exit(0);
                             }
                         //change to
                         }
@@ -116,9 +116,9 @@ public class attackBoard extends JPanel{
                                 boolean lost = game.getP1().isPlayerLost();
                                 //change from
                                 if (lost) {
-                                    game.setState(game.getEndOfTheGame());
                                     JOptionPane.showMessageDialog(panel, "You(player 2) WON! Congratulations!\nClick OK will Exit the game");
-                                    game.p2play(game);
+                                    System.out.println("end of the game player 2 ");
+                                    System.exit(0);
                                 }
                                 //change to
                             }
