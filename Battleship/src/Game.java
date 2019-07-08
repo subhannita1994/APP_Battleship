@@ -4,6 +4,8 @@ public class Game {
 	private Screen playerScreen1;
 	private  Player p2;
 	private Screen playerScreen2;
+	private boolean takeTurnAttack;
+	
 	public Game() {
 		this.p1 = new Player("Player1", this, 3);
 		this.playerScreen1 = new Screen("Player1",this);
@@ -28,5 +30,12 @@ public class Game {
 		game.getP2().getSelfBoard().setSelfBoardListener(false);
 		game.getP2().getAttackBoard().setAttackBoardListener(false);
 	}
+	public void setTakeTurnAttack(boolean isPlayerTurn){
+        this.takeTurnAttack = isPlayerTurn;
+    }
+
+    public boolean getTakeTurnAttack() {
+        return takeTurnAttack;
+    }
 
 }
