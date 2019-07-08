@@ -69,12 +69,12 @@ public class attackBoard extends JPanel{
                             boolean isSunk = game.getP2().isSunk(hit);
                             if (isSunk) {
                                 enemyShipSunkP1++;
-                                game.getP1().getScreen().enemyShipSunk.setText(Integer.toString(enemyShipSunkP1));
+                                game.getP1().getScreen().getOppoShipsSunk().setText(Integer.toString(enemyShipSunkP1));
                                 JOptionPane.showMessageDialog(panel, "Player's 2 ship was sunk! Congratulations!\nclick OK will transition to player 2 screen");
                                 game.getP1().getScreen().hideScreen();	//check
                                 game.getP2().getScreen().showScreen();	//check
                                 String ownShipSunkPlayer2 = Integer.toString(game.getP2().getNumberOfOwnShipSunk());
-                                game.getP2().getScreen().ownShipSunk.setText(ownShipSunkPlayer2);
+                                game.getP2().getScreen().getselfShipSunk().setText(ownShipSunkPlayer2);
                             }
                         }
                         boolean lost = game.getP2().isPlayerLost();
@@ -105,12 +105,12 @@ public class attackBoard extends JPanel{
                                 boolean isSunk = game.getP1().isSunk(hit);
                                 if (isSunk) {
                                     enemyShipSunkP2++;
-                                    game.getP2().getScreen().enemyShipSunk.setText(Integer.toString(enemyShipSunkPlayer2));
+                                    game.getP2().getScreen().getOppoShipsSunk().setText(Integer.toString(enemyShipSunkP2));
                                     JOptionPane.showMessageDialog(panel, "Player's 1 ship was sunk! Congratulations!\nclick OK will transition to player 1 screen");
                                     game.getP2().getScreen().hideScreen();	//check
                                     game.getP1().getScreen().showScreen();
                                     String ownShipSunkPlayer1 = Integer.toString(game.getP1().getNumberOfOwnShipSunk());
-                                    game.getP1().getScreen().ownShipSunk.setText(ownShipSunkPlayer1);
+                                    game.getP1().getScreen().getselfShipSunk().setText(ownShipSunkPlayer1);
                                 }
                             }
                                 boolean lost = game.getP1().isPlayerLost();
@@ -136,7 +136,7 @@ public class attackBoard extends JPanel{
 
     }
     public void getJpanel(Point newPoint){
-        thePanel =  this.getComponentAt(newPoint);	
+        thePanel =  this.getComponentAt(newPoint);	//check
     }
     
     public void draw(){

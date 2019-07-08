@@ -90,4 +90,7 @@ public class Screen extends JFrame{
 	}
 	public void hideScreen() { this.setVisible(false);}
 	public void showScreen() {this.setVisible(true);}
+	public JLabel getselfShipSunk() {return this.selfShipsSunk;}
+	public JLabel getSelfShips() {return this.selfShips;}
+	public JLabel getOppoShipsSunk() {return this.oppoShipsSunk;}
 }
