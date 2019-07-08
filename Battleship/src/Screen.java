@@ -62,7 +62,7 @@ public class Screen extends JFrame{
                         setupPhase1 = false;
                     }
                     else{
-                        game.p1play();
+                        game.p1play(game);
                     }
                     hideScreen();
                     game.getP2().getScreen().showScreen();
@@ -74,7 +74,7 @@ public class Screen extends JFrame{
                         setupPhase2 = false;
                     }
                     else{
-                        game.p2play();
+                        game.p2play(game);
                     }
                     hideScreen();
                     game.getP1().getScreen().showScreen();

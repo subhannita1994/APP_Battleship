@@ -16,15 +16,17 @@ public class Game {
 	public static void main(String[] args) {
 		Game game = new Game();
 		//setup
-		game.getP1().getSelfBoard().setSelfGridListener(true);
+		game.getP1().getSelfBoard().setSelfBoardListener(true);
 		game.getP2().getSelfBoard().setSelfBoardListener(true);
 		//game starts
 	}
-	public void p1play() {
-		
+	public void p1play(Game game) {
+		game.getP1().getSelfBoard().setSelfBoardListener(false);
+		game.getP1().getAttackBoard().setAttackBoardListener(false);
 	}
-	public void p2play() {
-		
+	public void p2play(Game game) {
+		game.getP2().getSelfBoard().setSelfBoardListener(false);
+		game.getP2().getAttackBoard().setAttackBoardListener(false);
 	}
 
 }
