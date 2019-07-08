@@ -88,6 +88,6 @@ public class Screen extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
-	private void hideScreen() { this.setVisible(false);}
-	private void showScreen() {this.setVisible(true);}
+	public void hideScreen() { this.setVisible(false);}
+	public void showScreen() {this.setVisible(true);}
 }

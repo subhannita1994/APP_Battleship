@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.ArrayList;
 public class selfBoard extends JPanel{
 
-	private ArrayList<Ship> ships;
 	private String name;
 	private Game game;
 	private JPanel self;
@@ -36,14 +35,11 @@ public class selfBoard extends JPanel{
         }
         this.add(self);
         
-		this.ships = new ArrayList<Ship>();
 		this.name = name; this.game = game;
 		
 		
 	}
-	public void addShip(Ship ship) {
-			this.ships.add(ship);
-	}
+	
 	
     private JPanel getCell()
     {
