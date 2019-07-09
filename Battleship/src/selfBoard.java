@@ -128,7 +128,7 @@ public class selfBoard extends JPanel{
                if(temp[i][j]==0){
                    int x = numberToPanel(i);
                    int y = numberToPanel(j);
-                   System.out.println("\ninside black "+x +"      "+ y);
+//                   System.out.println("\ninside black "+x +"      "+ y);
 
                    Point p = new Point(Math.abs(x),Math.abs(y));
                    getJpanel(p);

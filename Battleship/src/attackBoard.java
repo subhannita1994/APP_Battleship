@@ -54,6 +54,7 @@ public class attackBoard extends JPanel{
                     if (name.equals("Player1")) {
                         if(!game.getTakeTurnAttack()) {
                             game.setTakeTurnAttack(true);
+                            
                             Coordinate hit = new Coordinate(x, y);
                             game.getP2().attackShip(hit);
 

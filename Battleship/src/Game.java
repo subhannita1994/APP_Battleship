@@ -14,17 +14,22 @@ public class Game {
 	public static void main(String[] args) {
 		Game game = new Game();
 		//setup
+		game.getP1().getScreen().showScreen();
+		game.getP2().getScreen().hideScreen();
 		game.getP1().getScreen().getSelfBoard().setSelfBoardListener(true);
 		game.getP2().getScreen().getSelfBoard().setSelfBoardListener(true);
 		//game starts
 	}
 	public void p1play(Game game) {
+		System.out.println("Player1 turn");
 		game.getP1().getScreen().getSelfBoard().setSelfBoardListener(false);
-		game.getP1().getScreen().getAttackBoard().setAttackBoardListener(false);
+		game.getP1().getScreen().getAttackBoard().setAttackBoardListener(true);
+		
 	}
 	public void p2play(Game game) {
+		System.out.println("Player2 turn");
 		game.getP2().getScreen().getSelfBoard().setSelfBoardListener(false);
-		game.getP2().getScreen().getAttackBoard().setAttackBoardListener(false);
+		game.getP2().getScreen().getAttackBoard().setAttackBoardListener(true);
 	}
 	public void setTakeTurnAttack(boolean isPlayerTurn){
         this.takeTurnAttack = isPlayerTurn;

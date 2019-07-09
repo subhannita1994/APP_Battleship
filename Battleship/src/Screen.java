@@ -54,30 +54,39 @@ public class Screen extends JFrame{
         
         next.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+            	System.out.println("next pressed; name:"+name);
                 if(name.equals("Player1")){
-                    temp = game.getP1().getInitShips();
+                    temp = game.getP1().getFleet().size();
                     if(setupPhase1){
+                    	System.out.println("Player 1 setUpPhase");
                         selfShips.setText(Integer.toString(temp));
                         setupPhase1 = false;
+                        hideScreen();
+                        game.getP2().getScreen().showScreen();
                     }
                     else{
-                        game.p1play(game);
-                    }
-                    hideScreen();
-                    game.getP2().getScreen().showScreen();
-                }
-                if(name.equals("Player2")){
-                    temp = game.getP2().getInitShips();
-                    if(setupPhase2){
-                        selfShips.setText(Integer.toString(temp));
-                        setupPhase2 = false;
-                    }
-                    else{
+                    	hideScreen();
+                        game.getP2().getScreen().showScreen();
                         game.p2play(game);
                     }
-                    hideScreen();
-                    game.getP1().getScreen().showScreen();
+                    
+                }
+                if(name.equals("Player2")){
+                    temp = game.getP2().getFleet().size();
+                    if(setupPhase2){
+                    	System.out.println("Player 2 setUpPhase");
+                        selfShips.setText(Integer.toString(temp));
+                        setupPhase2 = false;
+                        
+                        
+                    }
+                    	hideScreen();
+                        game.getP1().getScreen().showScreen();
+                        game.p1play(game);
+                    
+                        
+                    
+                    
                 }
             }
         });

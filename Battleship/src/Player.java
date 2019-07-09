@@ -16,8 +16,8 @@ public class Player {
 		this.fleet = new ArrayList<Ship>();
 	}
 	
-	public int getInitShips() {
-		return this.initShips;
+	public ArrayList<Ship> getFleet() {
+		return this.fleet;
 	}
 
 	public Screen getScreen() {return this.screen;}
