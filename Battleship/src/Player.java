@@ -4,9 +4,7 @@ import java.awt.*;
 public class Player {
 	
 	private int initShips;
-	private selfBoard sb;
 	private Screen screen;
-	private attackBoard ab;
 	private ArrayList<Ship> fleet;
 	private int[][] attackData = new int[11][11];
     private int[][] selfData = new int[11][11];
@@ -14,9 +12,7 @@ public class Player {
     
 	public Player(String name, Game game, int initShips) {
 		this.initShips = initShips;
-		this.sb= new selfBoard(name, game);
 		this.screen = new Screen(name, game);
-		this.ab = new attackBoard(name,game);
 		this.fleet = new ArrayList<Ship>();
 	}
 	
@@ -24,7 +20,6 @@ public class Player {
 		return this.initShips;
 	}
 
-	public selfBoard getSelfBoard() {return this.sb;}
 	public Screen getScreen() {return this.screen;}
 	public void addShip(Coordinate c1, Coordinate c2, Coordinate c3) {
 		if(c1.getX()==11||c2.getX()==11||c3.getX()==11 ||c1.getY()==11||c2.getY()==11||c3.getY()==11){
@@ -173,7 +168,6 @@ public class Player {
             }
         }
     }
-	public attackBoard getAttackBoard() {return this.ab;}
 	public void attackShip(Coordinate hit) {
 		for(Ship ship : fleet) {
 			ship.Hit(hit);

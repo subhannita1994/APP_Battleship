@@ -93,4 +93,24 @@ public class Screen extends JFrame{
 	public JLabel getselfShipSunk() {return this.selfShipsSunk;}
 	public JLabel getSelfShips() {return this.selfShips;}
 	public JLabel getOppoShipsSunk() {return this.oppoShipsSunk;}
+	public selfBoard getSelfBoard(){
+
+        for(Component child : this.getContentPane().getComponents()){
+
+            if(child instanceof selfBoard ){
+                return (selfBoard)child;
+            }
+        }
+        return null;
+    }
+
+    public attackBoard getAttackBoard(){
+        for(Component child : this.getContentPane().getComponents()){
+            if(child instanceof attackBoard ){
+                return (attackBoard) child;
+            }
+
+        }
+        return null;
+    }
 }
