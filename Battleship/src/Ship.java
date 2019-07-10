@@ -1,15 +1,10 @@
 
-/**
- * @author Danil Kolesnikov danil.kolesnikov@sjsu.edu
- * @author Minh Phan minh.phan@sjsu.edu
- * CS 151 HW4 Fall 2017
- */
 
 public class Ship {
 
-    Coordinate a;
-    Coordinate b;
-    Coordinate c;
+    private Coordinate a;
+    private Coordinate b;
+    private Coordinate c;
 
     // Boolean should be true if the point was hit by another player
     boolean aHit;
@@ -46,36 +41,45 @@ public class Ship {
     // Sets booleans to true if the
     public boolean isPointHit(Coordinate hit){
         if(hit.getX() == a.getX()&&hit.getY() == a.getY()){
+        	System.out.print("aHit hit");
             return true;
         }
         else if(hit.getX() == b.getX()&&hit.getY() == b.getY()){
+        	System.out.print("bHit hit");
             return true;
         }
         else if(hit.getX() == c.getX()&&hit.getY() == c.getY()){
+        	System.out.print("cHit hit");
             return true;
         }
+        System.out.print("not hit");
         return false;
     }
 
     //call hit to attack the ship
     public void Hit(Coordinate hit){
         if(hit.getY() == a.getY() && hit.getX() == a.getX()){
-            aHit =true;
+        	System.out.print("aHit hit");
+        	aHit =true;
         }
         if(hit.getY() == b.getY() && hit.getX() == b.getX()){
-            bHit =true;
+        	System.out.print("aHit hit");
+        	bHit =true;
         }
         if(hit.getY() == c.getY() && hit.getX() == c.getX()){
-            cHit =true;
+        	System.out.print("aHit hit");
+        	cHit =true;
         }
     }
 
     //check if the ship is sunk
     public boolean isShipSunk(){
         if(aHit && bHit && cHit){
+        	System.out.print("hit");
             return true;
         }
         else{
+        	System.out.print("not hit");
             return false;
         }
     }

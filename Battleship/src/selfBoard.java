@@ -12,7 +12,7 @@ public class selfBoard extends JPanel{
 	private Game game;
 	private JPanel self;
 	private JPanel temp;
-	private boolean isSelfBoardListener;
+	private boolean isSelfBoardListener = true;
 
     private Point firstPoint = new Point(0,0);
     private Point secondNextPoint = new Point(0,0);
@@ -25,6 +25,7 @@ public class selfBoard extends JPanel{
 	public selfBoard(String name, Game game) {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         self = new JPanel();
+        this.name = name; this.game = game;
         self.setLayout(new GridLayout(0,10));
 
         for (int i = 0; i < 10; i++) {
@@ -35,8 +36,8 @@ public class selfBoard extends JPanel{
         }
         this.add(self);
         
-		this.name = name; this.game = game;
 		
+		System.out.println(this.name+"'s self board created");
 		
 	}
 	
@@ -49,10 +50,18 @@ public class selfBoard extends JPanel{
         firstCell.setPreferredSize(new Dimension(20, 20)); // for demo purposes only
         firstCell.setBackground(Color.black);
 
+        
+        
         firstCell.addMouseListener(new MouseAdapter() {
+        	
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(isSelfBoardListener) {
+            	if(isSelfBoardListener && name.equals("Player2")) {
+            		
+    	            draw();
+            	
+            }
+                if(isSelfBoardListener && name.equals("Player1")) {
                     firstPoint = firstCell.getLocation();
                     double xPos = (firstPoint.getX()/20+1);
                     int x = (int) xPos;
@@ -81,14 +90,14 @@ public class selfBoard extends JPanel{
                     getComp2(secondNextPoint);
                     getComp3(thirdNextPoint);
 
-                    if(name.equals("Player1")){
+//                    if(name.equals("Player1")){
                         game.getP1().addShip(a,b,c); // Create new ship object
                         draw();
-                    }
-                    if(name.equals("Player2")){
-                        game.getP2().addShip(a,b,c); // Create new ship object
-                        draw();
-                    }
+//                    }
+//                    if(name.equals("Player2")){
+//                        game.getP2().addShip(a,b,c); // Create new ship object
+//                        draw();
+//                    }
                 }
             }
         });

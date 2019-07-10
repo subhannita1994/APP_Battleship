@@ -54,15 +54,29 @@ public class Screen extends JFrame{
         
         next.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	System.out.println("next pressed; name:"+name);
+            	System.out.println("next pressed by "+name);
                 if(name.equals("Player1")){
                     temp = game.getP1().getFleet().size();
                     if(setupPhase1){
-                    	System.out.println("Player 1 setUpPhase");
                         selfShips.setText(Integer.toString(temp));
                         setupPhase1 = false;
                         hideScreen();
                         game.getP2().getScreen().showScreen();
+                        System.out.println("Player 1 ships:");
+                        game.getP1().printSelfData();
+                        //change from ai
+                        Coordinate a = new Coordinate(1,1);
+        	            Coordinate b = new Coordinate(2,1);
+        	            Coordinate c = new Coordinate(3,1);
+        	            game.getP2().addShip(a,b,c);
+        	            a = new Coordinate(1,3);
+        	            b = new Coordinate(2,3);
+        	            c = new Coordinate(3,3);
+        	            game.getP2().addShip(a, b, c);
+        	            System.out.println("Player 2 ships:");
+        	            game.getP2().printSelfData();
+        	            
+        	            //change to ai
                     }
                     else{
                     	hideScreen();
@@ -74,10 +88,9 @@ public class Screen extends JFrame{
                 if(name.equals("Player2")){
                     temp = game.getP2().getFleet().size();
                     if(setupPhase2){
-                    	System.out.println("Player 2 setUpPhase");
                         selfShips.setText(Integer.toString(temp));
                         setupPhase2 = false;
-                        
+                        System.out.println("Game starts!");
                         
                     }
                     	hideScreen();
@@ -95,6 +108,7 @@ public class Screen extends JFrame{
         this.pack();
         showScreen();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		System.out.println(name+"'s screen created");
 
 	}
 	public void hideScreen() { this.setVisible(false);}
