@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.List;
 import java.util.LinkedList;
 
-public class attackBoard extends JPanel{
+public class AttackBoard extends JPanel{
 
 	private String name; private Game game;
 	private JPanel self;
@@ -28,7 +28,7 @@ public class attackBoard extends JPanel{
 	 * @param name
 	 * @param game
 	 */
-	public attackBoard(String name, Game game) {
+	public AttackBoard(String name, Game game) {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		self = new JPanel();
 		this.name = name; this.game = game;

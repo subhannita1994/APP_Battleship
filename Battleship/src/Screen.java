@@ -12,8 +12,8 @@ import java.awt.event.*;
 public class Screen extends JFrame{
 
 	private int temp;
-	private attackBoard ab;
-	private selfBoard sb;
+	private AttackBoard ab;
+	private SelfBoard sb;
 	private JLabel selfShips;
 	private JLabel selfShipsSunk;
 	private JLabel oppoShipsSunk;
@@ -24,8 +24,8 @@ public class Screen extends JFrame{
 	public Screen(String name, Game game) {
 		super(name);
 		this.game = game;
-		this.ab = new attackBoard(name,game);
-		this.sb = new selfBoard(name, game);
+		this.ab = new AttackBoard(name,game);
+		this.sb = new SelfBoard(name, game);
 
 		this.setLayout(new BorderLayout());
 		this.add(sb, BorderLayout.EAST);
@@ -142,12 +142,12 @@ public class Screen extends JFrame{
 		return this.oppoShipsSunk;
 	}
 	
-	public selfBoard getSelfBoard(){
+	public SelfBoard getSelfBoard(){
 
 		for(Component child : this.getContentPane().getComponents()){
 
-			if(child instanceof selfBoard ){
-				return (selfBoard)child;
+			if(child instanceof SelfBoard ){
+				return (SelfBoard)child;
 			}
 		}
 		return null;
@@ -157,10 +157,10 @@ public class Screen extends JFrame{
 	 * Method for attack board instance
 	 * @return
 	 */
-	public attackBoard getAttackBoard(){
+	public AttackBoard getAttackBoard(){
 		for(Component child : this.getContentPane().getComponents()){
-			if(child instanceof attackBoard ){
-				return (attackBoard) child;
+			if(child instanceof AttackBoard ){
+				return (AttackBoard) child;
 			}
 
 		}
