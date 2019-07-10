@@ -14,7 +14,7 @@ import java.util.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class SelfBoard extends JPanel{
+public class selfBoard extends JPanel{
 
 	private String name;
 	private Game game;
@@ -35,7 +35,7 @@ public class SelfBoard extends JPanel{
 	 * @param name
 	 * @param game
 	 */
-	public SelfBoard(String name, Game game) {
+	public selfBoard(String name, Game game) {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		self = new JPanel();
 		this.name = name; this.game = game;
