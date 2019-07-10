@@ -3,6 +3,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Class extending JFrame for designing the console for game
+ * @version 1.1
+ * @author group3
+ */
 public class Screen extends JFrame{
 
 	private int temp;
@@ -111,6 +116,11 @@ public class Screen extends JFrame{
 		System.out.println(name+"'s screen created");
 
 	}
+
+    /**
+     * Function for fetching different phases of game
+     *
+     */
 	public void hideScreen() { this.setVisible(false);}
 	public void showScreen() {this.setVisible(true);}
 	public JLabel getselfShipSunk() {return this.selfShipsSunk;}
@@ -127,6 +137,10 @@ public class Screen extends JFrame{
         return null;
     }
 
+    /**
+     * Method for attack board instance
+     * @return
+     */
     public attackBoard getAttackBoard(){
         for(Component child : this.getContentPane().getComponents()){
             if(child instanceof attackBoard ){

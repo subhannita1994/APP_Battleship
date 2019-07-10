@@ -1,3 +1,7 @@
+/**
+ * Class defining its coordinates for managing ships
+ * @version 1.1
+ */
 
 public class Coordinate {
 	private int x;
@@ -14,7 +18,11 @@ public class Coordinate {
         return y;
     }
 
-    //compare coordinate objects
+    /**
+     * Comparing coordinate objects
+     * @param coordinate
+     * @return
+     */
     public boolean compareCoord(Coordinate coordinate){
         if(coordinate.getX() == this.x && coordinate.getY() == this.y){
             return true;

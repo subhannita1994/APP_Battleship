@@ -1,5 +1,8 @@
-
-
+/**
+ * This class will define the ships controlling its placement and its coordinates
+ * @version 1.1
+ * @author group3
+ */
 public class Ship {
 
     private Coordinate a;
@@ -18,7 +21,11 @@ public class Ship {
         this.c = c;
     }
 
-    //compare ships to check if they are the same
+    /**
+     * Method to compare the ships if they are placed at same position or not
+     * @param ship
+     * @return
+     */
     public boolean compareShip(Ship ship){
         if(ship.getA().compareCoord(this.a) && ship.getB().compareCoord(this.b) && ship.getC().compareCoord(this.c)){
             return true;
@@ -38,7 +45,11 @@ public class Ship {
         return c;
     }
 
-    // Sets booleans to true if the
+    /**
+     * To check if the ship is hit or not
+     * @param hit
+     * @return
+     */
     public boolean isPointHit(Coordinate hit){
         if(hit.getX() == a.getX()&&hit.getY() == a.getY()){
         	System.out.print("aHit hit");
@@ -56,7 +67,10 @@ public class Ship {
         return false;
     }
 
-    //call hit to attack the ship
+    /**
+     * Function for calling when the ship is hit
+     * @param hit
+     */
     public void Hit(Coordinate hit){
         if(hit.getY() == a.getY() && hit.getX() == a.getX()){
         	System.out.print("aHit hit");
@@ -72,7 +86,10 @@ public class Ship {
         }
     }
 
-    //check if the ship is sunk
+    /**
+     * Function to check if ship is hit or not
+     * @return
+     */
     public boolean isShipSunk(){
         if(aHit && bHit && cHit){
         	System.out.print("hit");
@@ -84,7 +101,9 @@ public class Ship {
         }
     }
 
-    // Debugging functions
+    /**
+     * Function to debug if ship is being hit or not
+     */
     public void printShip(){
         String result = "A("+a.getX()+", "+a.getY()+")"+" B("+b.getX()+", "+b.getY()+") C("+c.getX()+", "+c.getY()+")";
         System.out.print(result);

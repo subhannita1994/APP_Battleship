@@ -4,6 +4,11 @@ import javax.swing.JPanel;
 
 import java.awt.*;
 
+/**
+ * Class for maintaining player and its fleet details
+ * @version 1.1
+ * @author group 3
+ */
 public class Player {
 	
 	private int initShips;
@@ -31,6 +36,13 @@ public class Player {
 	}
 
 	public Screen getScreen() {return this.screen;}
+
+    /**
+     * This will allow to add ships where the players insert on board
+     * @param c1
+     * @param c2
+     * @param c3
+     */
 	public void addShip(Coordinate c1, Coordinate c2, Coordinate c3) {
 		if(c1.getX()==boardSize||c2.getX()==boardSize||c3.getX()==boardSize ||c1.getY()==boardSize||c2.getY()==boardSize||c3.getY()==boardSize){
             System.out.print("\nPreventing adding a ship: fleet is full or user clicked too close to the edge");
@@ -59,6 +71,14 @@ public class Player {
             }
         }
 	}
+
+    /**
+     * Check if ships are overlapped or not while placing
+     * @param a
+     * @param b
+     * @param c
+     * @return
+     */
 	public boolean isOvelap(Coordinate a, Coordinate b, Coordinate c){
         boolean isA = false;
         boolean isB = false;
@@ -88,6 +108,14 @@ public class Player {
         }
         return false;
     }
+
+    /**
+     * Validate ships overlapping if placed at same points
+     * @param a
+     * @param b
+     * @param c
+     * @return
+     */
 	public boolean isOvelapAtRotatePoint(Coordinate a, Coordinate b, Coordinate c){
         boolean isA = false;
         boolean isB = false;
@@ -117,7 +145,14 @@ public class Player {
         }
         return false;
     }
-	// check for ships collision when ship is rotated
+
+    /**
+     * Checking for ships collision if placed at same coordinate
+     * @param a
+     * @param b
+     * @param c
+     * @return
+     */
     public boolean isShipCollision (Coordinate a, Coordinate b, Coordinate c){
         deleteShip(a,b,c);
         selfData[a.getX()][a.getY()]=0;
@@ -149,7 +184,13 @@ public class Player {
         return false;
 
     }
-  //remove ship from fleet array
+
+    /**
+     * To remove ship from the fleet
+     * @param a
+     * @param b
+     * @param c
+     */
     public void deleteShip(Coordinate a, Coordinate b, Coordinate c) {
         Ship temp = new Ship(a, b, c);
         for (Ship ship :fleet) {
@@ -158,6 +199,11 @@ public class Player {
             }
         }
     }
+
+    /**
+     * For attacking ship
+     * @param hit
+     */
 	public void attackShip(Coordinate hit) {
 		System.out.print("For "+this.name+"--");
 		for(Ship ship : fleet) {
@@ -167,6 +213,13 @@ public class Player {
 
 		System.out.println();
 	}
+
+    /**
+     * Setter for attack
+     * @param x
+     * @param y
+     * @param result
+     */
 	public void setAttackData(int x, int y, String result) {
         if(result.equals("success")){
             attackData[x][y] = 1;
@@ -192,7 +245,10 @@ public class Player {
         return false; // must return false because
     }
 
-    // isPlayerLost determines if the player lost based on the fleet arraylist size
+    /**
+     * Determines if the player has lost determining from its ArrayList size
+     * @return
+     */
     public boolean isPlayerLost(){
         if(fleet.size()==0){
         	System.out.println(this.name+" lost");
@@ -204,7 +260,11 @@ public class Player {
         }
     }
 
-    // Boolean method returns true if the Ship was sunk
+    /**
+     * Will return true if the ship was sunk
+     * @param hitCord
+     * @return
+     */
     public boolean isSunk(Coordinate hitCord){
     	System.out.print("Checking for ship sunk for "+this.name+" ");
         for (Ship ship:fleet){

@@ -6,6 +6,11 @@ import java.net.*;
 import java.util.*;
 import java.util.List;
 import java.util.LinkedList;
+
+/**
+ * This class is designed to handle the attacking phase between players and AI engine for player 2
+ * @version 1.1
+ */
 public class attackBoard extends JPanel{
 
 	private String name; private Game game;
@@ -15,8 +20,14 @@ public class attackBoard extends JPanel{
 	private int enemyShipSunkP1 = 0;
 	private int enemyShipSunkP2 = 0;
 	private JPanel thePanel = new JPanel();
-	private int xp2, yp2;	//ai
-	
+	private int xp2, yp2;
+
+    /**
+     * The method for creating attacking board
+     * @param name
+     * @param game
+     */
+
 	public attackBoard(String name, Game game) {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         self = new JPanel();
@@ -38,8 +49,8 @@ public class attackBoard extends JPanel{
 	private JPanel getCell()
     {
         JPanel panel = new JPanel();	
-        panel.setBackground(Color.black);
-        panel.setBorder(BorderFactory.createLineBorder(Color.red, 2));
+        panel.setBackground(Color.white);
+        panel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         panel.setPreferredSize(new Dimension(20, 20)); // for demo purposes only
 
         panel.addMouseListener(new MouseAdapter() {
@@ -65,7 +76,7 @@ public class attackBoard extends JPanel{
         		            if (isSunk) {
         		                enemyShipSunkP2++;
         		                game.getP2().getScreen().getOppoShipsSunk().setText(Integer.toString(enemyShipSunkP2));
-        		                JOptionPane.showMessageDialog(panel, "Player's 1 ship was sunk! Congratulations!\nclick OK will transition to player 1 screen");
+        		                JOptionPane.showMessageDialog(panel, "Player's 1 ship was sunk! Congratulations!");
         		                game.getP2().getScreen().hideScreen();	
         		                game.getP1().getScreen().showScreen();
         		                String ownShipSunkPlayer1 = Integer.toString(game.getP1().getNumberOfOwnShipSunk());
@@ -74,7 +85,7 @@ public class attackBoard extends JPanel{
         	        	}
         	            boolean lost = game.getP1().isPlayerLost();
         	            if (lost) {
-        	                JOptionPane.showMessageDialog(panel, "You(player 2) WON! Congratulations!\nClick OK will Exit the game");
+        	                JOptionPane.showMessageDialog(panel, "Player 2 WON! Congratulations!");
         	                System.out.println("end of the game player 2 ");
         	                System.exit(0);
         	            }
@@ -108,7 +119,7 @@ public class attackBoard extends JPanel{
                             if (isSunk) {
                                 enemyShipSunkP1++;
                                 game.getP1().getScreen().getOppoShipsSunk().setText(Integer.toString(enemyShipSunkP1));
-                                JOptionPane.showMessageDialog(panel, "Player's 2 ship was sunk! Congratulations!\nclick OK will transition to player 2 screen");
+                                JOptionPane.showMessageDialog(panel, "Player's 2 ship was sunk! Congratulations!");
                                 game.getP1().getScreen().hideScreen();	
                                 game.getP2().getScreen().showScreen();	
                                 String ownShipSunkPlayer2 = Integer.toString(game.getP2().getNumberOfOwnShipSunk());
@@ -117,7 +128,7 @@ public class attackBoard extends JPanel{
                         }
                         boolean lost = game.getP2().isPlayerLost();
                             if (lost) {
-                                JOptionPane.showMessageDialog(panel, "You(player 1) WON! Congratulations!\nClick OK will Exit the game");
+                                JOptionPane.showMessageDialog(panel, "Player 1 WON! Congratulations!");
                                 System.out.println("end of the game player 1 ");
                                 System.exit(0);
                             }
@@ -130,6 +141,11 @@ public class attackBoard extends JPanel{
 
         return panel;
     }
+
+    /**
+     * Function for setting attack board listener
+     * @param b
+     */
 	
 	public void setAttackBoardListener (boolean b){
         this.isAttackBoardListener = b;
@@ -138,7 +154,10 @@ public class attackBoard extends JPanel{
     public void getJpanel(Point newPoint){
         thePanel =  this.getComponentAt(newPoint);	//check
     }
-    
+
+    /**
+     * Function for placing ships on board
+     */
     public void draw(){
 
         int[][] temp=null;
@@ -166,7 +185,7 @@ public class attackBoard extends JPanel{
 
                     Point p = new Point(x,y);
                     getJpanel(p);
-                    thePanel.setBackground(Color.WHITE);
+                    thePanel.setBackground(Color.RED);
 
                 }
             }
@@ -190,7 +209,7 @@ public class attackBoard extends JPanel{
         }
         return (JPanel)comp;
     }
-    //cheange from (ai)
+    //change from (ai)
 
 	public void setHitCoodsP2(int x, int y) {
 		this.xp2 = x; this.yp2 = y;

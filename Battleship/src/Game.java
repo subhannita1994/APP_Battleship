@@ -1,4 +1,8 @@
-
+/**
+ * Class designed to control game play
+ * @version 1.1
+ * @author group 3
+ */
 public class Game {
 	private  Player p1;
 	private  Player p2;
@@ -23,12 +27,22 @@ public class Game {
 		game.getP2().getScreen().getSelfBoard().setSelfBoardListener(true);	
 		//game starts
 	}
+
+	/**
+	 * Player 1 play with its listeners
+	 * @param game
+	 */
 	public void p1play(Game game) {
 		System.out.println("Player1 turn");
 		game.getP1().getScreen().getSelfBoard().setSelfBoardListener(false);
 		game.getP1().getScreen().getAttackBoard().setAttackBoardListener(true);
 		
 	}
+
+	/**
+	 * Player 2 play and its listener
+	 * @param game
+	 */
 	public void p2play(Game game) {
 		System.out.println("Player2 turn");
 		x++;

@@ -6,6 +6,12 @@ import java.net.*;
 import java.util.*;
 import java.util.List;
 import java.util.ArrayList;
+
+/**
+ * Class for creating player 1 board and handling its functionality
+ * @version 1.1
+ * @author group3
+ */
 public class selfBoard extends JPanel{
 
 	private String name;
@@ -21,7 +27,12 @@ public class selfBoard extends JPanel{
     private JPanel thirdNextCell = null;
 
     private JPanel thePanel = new JPanel();
-	
+
+    /**
+     * This will create board for players and maintain grid
+     * @param name
+     * @param game
+     */
 	public selfBoard(String name, Game game) {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         self = new JPanel();
@@ -46,9 +57,9 @@ public class selfBoard extends JPanel{
     {
 
         JPanel firstCell = new JPanel();
-        firstCell.setBorder(BorderFactory.createLineBorder(Color.blue, 2));
-        firstCell.setPreferredSize(new Dimension(20, 20)); // for demo purposes only
-        firstCell.setBackground(Color.black);
+        firstCell.setBorder(BorderFactory.createLineBorder(Color.orange, 2));
+        firstCell.setPreferredSize(new Dimension(20, 20));
+        firstCell.setBackground(Color.blue);
 
         
         
@@ -112,9 +123,8 @@ public class selfBoard extends JPanel{
     public void getComp3(Point newPoint){
         thirdNextCell = this.getComponentAt(newPoint);
     }
-    public void draw(){
-
-
+    public void draw()
+    {
         int[][] temp=null;
         if(name.equals("Player1")){
             temp = game.getP1().getSelfData();
@@ -148,6 +158,7 @@ public class selfBoard extends JPanel{
             }
         }
     }
+
     public void getJpanel(Point newPoint){
         thePanel = this.getComponentAt(newPoint);
     }
