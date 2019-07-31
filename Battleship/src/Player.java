@@ -32,9 +32,7 @@ public class Player {
 			}
 		System.out.println(name+" created");
 	}
-
-
-
+	
 	/**
 	 * create new screen for this player
 	 */

@@ -80,7 +80,6 @@ public class AttackBoard extends JPanel implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(this.attackGridListener) {
-			System.out.println("here"+player.getName());
 			int x = (int) e.getX()/40;
 			int y = (int) e.getY()/40;
 			System.out.println("Attack Board: clicked "+x+","+y);
@@ -210,5 +209,26 @@ public class AttackBoard extends JPanel implements MouseListener{
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	/**
+	 * 
+	 * @return the attack board
+	 */
+	public JPanel getPanel() {
+		return self;
+	}
+	/**
+	 * 
+	 * @return number of shots taken this turn
+	 */
+	public int getCurShotsTaken() {
+		return curShots;
+	}
+	/**
+	 * 
+	 * @return board cells
+	 */
+	public JPanel[][] getCells(){
+		return cells;
 	}
 }
