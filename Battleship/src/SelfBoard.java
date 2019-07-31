@@ -135,6 +135,14 @@ public class SelfBoard extends JPanel implements ActionListener{
 	}
 
 	/**
+	 * 
+	 * @return 	this panel
+	 */
+	public JPanel getPanel() {
+		return this;
+	}
+	
+	/**
 	 * set the current ship being dragged
 	 * @param shipName	name/ID of the ship
 	 */
@@ -161,7 +169,7 @@ public class SelfBoard extends JPanel implements ActionListener{
 	 * @author Group 3
 	 * @version 1.2
 	 */
-	private class mouseListener extends MouseAdapter{
+	public class mouseListener extends MouseAdapter{
 
 		private SelfBoard gt;
 		private LinkedList<String> placedShips;
@@ -335,7 +343,6 @@ public class SelfBoard extends JPanel implements ActionListener{
 			}
 	}
 
-	//repaint cells	
 	/**
 	 * repaint cells when ships is dragged over them, provided ship can be placed there
 	 * @param iStart	starting y coordinate
@@ -404,6 +411,25 @@ public class SelfBoard extends JPanel implements ActionListener{
 				add(cell);
 			}
 		return this;
+	}
+	
+	/**
+	 * @return board cells
+	 */
+	public JPanel[][] getCells(){
+		return cells;
+	}
+	/**
+	 * @return list of alignment buttons
+	 */
+	public LinkedList<JToggleButton> getAlignmentButtons(){
+		return this.alignmentBtns;
+	}
+	/**
+	 * @return map of ship names to Ship objects
+	 */
+	public HashMap<String,Ship> getShips() {
+		return shipInfo;
 	}
 
 }
