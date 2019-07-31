@@ -11,14 +11,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-/*
- * Main driver class of Battleship
+/**
+ * Main driver class of Battleship Game
  * @author Group 3
  * @version 1.2
  */
 public class Game extends JFrame implements ActionListener{
 
-	private static Player player1;
+	private static Player player1;	
 	private static Player player2;
 	private JRadioButton salvoVariation;
 	private JRadioButton normalVariation;
@@ -26,10 +26,13 @@ public class Game extends JFrame implements ActionListener{
 	private JRadioButton humanMode;
 	private ButtonGroup variation;
 	private ButtonGroup mode;
-	
-	//constructs a new game of two players
+	private JButton start;
+
+	/**
+	 * Class constructor setting up the GUI of the initial welcome screen 
+	 */
 	public Game() {
-		
+
 		super();
 		this.setLayout(new BorderLayout());
 		this.add(new JLabel("Welcome to Battleship Game!", JLabel.CENTER), BorderLayout.NORTH);
@@ -64,41 +67,57 @@ public class Game extends JFrame implements ActionListener{
 		panel2.add(humanMode,BorderLayout.NORTH);
 		selection.add(panel1, BorderLayout.WEST);
 		selection.add(panel2, BorderLayout.EAST);
-		JButton start = new JButton("Start Game!");
+		start = new JButton("Start Game!");
 		start.addActionListener(this);
 		selection.add(start,BorderLayout.SOUTH);
 		this.add(selection, BorderLayout.SOUTH);
 		this.pack();
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 	}
-	
-	//return player 1
+
+	/**
+	 * @return the first player
+	 */
 	public Player getP1() {
 		return this.player1;
 	}
-	
-	//return player 2
+
+	/**
+	 * @return the second player
+	 */
 	public Player getP2() {
 		return this.player2;
 	}
-	
-	//get opponent player object of p
+
+	/**
+	 * @param	p	a player
+	 * @return the opponent of the specified player
+	 */
 	public Player getOppo(Player p) {
 		if(p.getName().equals("Player 1"))
 			return this.player2;
 		else
 			return this.player1;
 	}
-	//main driver function
+	/**
+	 * main driver function
+	 */
 	public static void main(String[] args) {
-		
-		
+
+
 		Game game = new Game();
-		
+
 	}
 
+	/**
+	 * Action listener to start button to initiate game setup.
+	 * Displays error message if one of {salvo, normal} variations and one of {human, computer} mode not selected.
+	 * Creates Player objects accordingly and their respective screens.
+	 * @param	e	ActionEvent corresponding to start button
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(variation.getSelection() == null || mode.getSelection() == null)
@@ -125,6 +144,7 @@ public class Game extends JFrame implements ActionListener{
 				player2.getScreen().getAttackBoard().setCurShotsPerTurn(1);
 			}
 			this.setVisible(false);
+			//TODO: game instructions
 			JOptionPane.showMessageDialog(this,"Set up your fleet by dragging ships to the board");
 			player1.getScreen().getSelfBoard().setSelfGridListener(true);
 			try {
@@ -135,5 +155,40 @@ public class Game extends JFrame implements ActionListener{
 			player2.getScreen().setVisible(false);
 		}	
 	}
-	
+
+	/**
+	 * @return the salvoVariation radio button for deliberate clicks during testing
+	 */
+	public JRadioButton getSalvoVariation() {
+		return salvoVariation;
+	}
+
+	/**
+	 * @return the normalVariation radio button for deliberate clicks during testing
+	 */
+	public JRadioButton getNormalVariation() {
+		return normalVariation;
+	}
+
+	/**
+	 * @return the computerMode radio button for firing deliberate clicks during testing
+	 */
+	public JRadioButton getComputerMode() {
+		return computerMode;
+	}
+
+	/**
+	 * @return the humanMode radio button for firing deliberate clicks during testing
+	 */
+	public JRadioButton getHumanMode() {
+		return humanMode;
+	}
+
+	/**
+	 * @return the start button to initiate game and firing deliberate clicks during testing
+	 */
+	public JButton getStartBtn() {
+		return start;
+	}
+
 }

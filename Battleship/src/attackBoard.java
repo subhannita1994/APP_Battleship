@@ -1,194 +1,214 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.List;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.HashMap;
 import java.util.LinkedList;
-public class attackBoard extends JPanel{
+/**
+ * Class representing attack board of each player
+ * @author Group 3
+ * @version 1.2
+ */
+public class AttackBoard extends JPanel implements MouseListener{
 
-	private String name; private Game game;
-	private JPanel self;
-	private JPanel temp;
-	private boolean isAttackBoardListener;
-	private int enemyShipSunkP1 = 0;
-	private int enemyShipSunkP2 = 0;
-	private JPanel thePanel = new JPanel();
+	private Player player;	//the associated player
+	private JPanel self;	//the JPanel containing the board
+	private boolean attackGridListener = false;	//controller for when to turn on attack grid to listening mode
+	private JPanel[][] cells = new JPanel[10][10];	//array of JPanels for the board
+	private int shotsPerTurn;	//allowable maximum shots per turn
+	private int curShots;	//number of shots left for this turn (useful in salvo variation)
+	private int oppoSunkShips;	//number of ships sunk in opponent's fleet (useful in salvo variation)
+	private HashMap<Coordinate,Boolean> shots = new HashMap<Coordinate,Boolean>();	//maps coordinates of attempted shots to whether they were hit or miss (useful in salvo variation) 
 	
-	
-	public attackBoard(String name, Game game) {
+	/**
+	 * constructs a new attack board for Player p
+	 * @param p	the Player object
+	 */
+	public AttackBoard(Player p) {
+		this.player = p;
+		this.shotsPerTurn = 5;
+		this.curShots = 0;
+		this.oppoSunkShips = 0;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, Color.BLACK));
         self = new JPanel();
-        self.setLayout(new GridLayout(0,10));
-
+        self.setLayout(new GridLayout(10,10));
+        this.add(new JLabel("Select your shots here!"));
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                temp = getCell();
-                self.add(temp);
+            	JPanel firstCell = new JPanel();
+            	firstCell.setName(i+","+j);
+            	firstCell.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
+                firstCell.setPreferredSize(new Dimension(40, 40)); // for demo purposes only
+                firstCell.setBackground(Color.blue);
+                cells[j][i] = firstCell;
+                self.add(firstCell);
             }
         }
+        self.addMouseListener(this);
         this.add(self);
-		this.name = name; this.game = game;
-		
+        System.out.println("Attack board for "+player.getName()+" created");
 	}
 	
-	private JPanel getCell()
-    {
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.black);
-        panel.setBorder(BorderFactory.createLineBorder(Color.red, 2));
-        panel.setPreferredSize(new Dimension(20, 20)); // for demo purposes only
-
-        panel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if(isAttackBoardListener) {
-
-                    Point i = panel.getLocation();
-                    double xPos = (i.getX() / 20 + 1);
-                    int x = (int) xPos;
-                    double yPos = (i.getY() / 20 + 1);
-                    int y = (int) yPos;
-
-                    if (name.equals("Player1")) {
-                        if(!game.getTakeTurnAttack()) {
-                            game.setTakeTurnAttack(true);
-                            
-                            Coordinate hit = new Coordinate(x, y);
-                            game.getP2().attackShip(hit);
-
-                            boolean success = game.getP2().isHit(hit);
-                            if (success) {
-                                game.getP1().setAttackData(x, y, "success");
-                                draw();
-                            } else {
-                                game.getP1().setAttackData(x, y, "failure");
-                                draw();
-                            }
-
-                            boolean isSunk = game.getP2().isSunk(hit);
-                            if (isSunk) {
-                                enemyShipSunkP1++;
-                                game.getP1().getScreen().getOppoShipsSunk().setText(Integer.toString(enemyShipSunkP1));
-                                JOptionPane.showMessageDialog(panel, "Player's 2 ship was sunk! Congratulations!\nclick OK will transition to player 2 screen");
-                                game.getP1().getScreen().hideScreen();	//check
-                                game.getP2().getScreen().showScreen();	//check
-                                String ownShipSunkPlayer2 = Integer.toString(game.getP2().getNumberOfOwnShipSunk());
-                                game.getP2().getScreen().getselfShipSunk().setText(ownShipSunkPlayer2);
-                            }
-                        }
-                        boolean lost = game.getP2().isPlayerLost();
-                        //change from
-                            if (lost) {
-                                JOptionPane.showMessageDialog(panel, "You(player 1) WON! Congratulations!\nClick OK will Exit the game");
-                                System.out.println("end of the game player 1 ");
-                                System.exit(0);
-                            }
-                        //change to
-                        }
-                        if (name.equals("Player2")) {
-                            if(game.getTakeTurnAttack()) {
-                                game.setTakeTurnAttack(false);
-                                Coordinate hit = new Coordinate(x, y);
-                                game.getP1().attackShip(hit);
-
-                                boolean success = game.getP1().isHit(hit);
-                                if (success) {
-                                    System.out.print("player2 attack");
-                                    game.getP2().setAttackData(x, y, "success");
-                                    draw();
-                                } else {
-                                    game.getP2().setAttackData(x, y, "failure");
-                                    draw();
-                                }
-
-                                boolean isSunk = game.getP1().isSunk(hit);
-                                if (isSunk) {
-                                    enemyShipSunkP2++;
-                                    game.getP2().getScreen().getOppoShipsSunk().setText(Integer.toString(enemyShipSunkP2));
-                                    JOptionPane.showMessageDialog(panel, "Player's 1 ship was sunk! Congratulations!\nclick OK will transition to player 1 screen");
-                                    game.getP2().getScreen().hideScreen();	//check
-                                    game.getP1().getScreen().showScreen();
-                                    String ownShipSunkPlayer1 = Integer.toString(game.getP1().getNumberOfOwnShipSunk());
-                                    game.getP1().getScreen().getselfShipSunk().setText(ownShipSunkPlayer1);
-                                }
-                            }
-                                boolean lost = game.getP1().isPlayerLost();
-                                //change from
-                                if (lost) {
-                                    JOptionPane.showMessageDialog(panel, "You(player 2) WON! Congratulations!\nClick OK will Exit the game");
-                                    System.out.println("end of the game player 2 ");
-                                    System.exit(0);
-                                }
-                                //change to
-                            }
-                        }
-
-
-            }
-        });
-
-        return panel;
-    }
 	
-	public void setAttackBoardListener (boolean b){
-        this.isAttackBoardListener = b;
+	
+	/**
+	 * set the attackGridListener
+	 * @param b true if attackBoard is supposed to listen; false otherwise
+	 */
+	public void setAttackGridListener(boolean b) {
+		this.attackGridListener = b;
+	}
 
-    }
-    public void getJpanel(Point newPoint){
-        thePanel =  this.getComponentAt(newPoint);	//check
-    }
-    
-    public void draw(){
 
-        int[][] temp=null;
-        if(name.equals("Player1")){
-            temp = game.getP1().getAttackData();
-        }
-        else if(name.equals("Player2")){
-            temp = game.getP2().getAttackData();
-        }
 
-        for (int i = 0; i < 11; i++) {
-            for (int j = 0; j < 11; j++)
-            {
-                if(temp[i][j]==1){
-                    int x = numberToPanel(i);
-                    int y = numberToPanel(j);
+	/** This method is called when player clicks on attack board but ignores if the cell is already clicked before.
+	 * Player gets to take all allowable shots per turn before getting to know the outcome (hit/miss) in the next turn
+	 * Once all allowable shots are taken the following are done:
+	 * 		1. timer for this player is stopped
+	 * 		2. shots counter is reset
+	 * 		3. judgment is passed on all the shots (hit/miss) 
+	 * 		4. show results(or paint) on this player's attack board and opponent's self board according to judgment
+	 * 		5. For Salvo variation : if new ships are sunk from opponent's fleet: 
+	 * 			5.1. decrease opponent's allowable shots per turn by 1
+	 * 			5.2. update oppoSunkShips field
+	 * 			5.3. update icons in the center panel
+	 * 		6. if all ships sunk from opponent's fleet, display message and close
+	 * Hide this Screen and get opponent's gamePlay Screen
+	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+	 */
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(this.attackGridListener) {
+			System.out.println("here"+player.getName());
+			int x = (int) e.getX()/40;
+			int y = (int) e.getY()/40;
+			System.out.println("Attack Board: clicked "+x+","+y);
+			if(player.getAttackData()[y][x]!=0) {
+				System.out.println("But this is already shot at before - so ignored");
+				return;
+			}
+			this.curShots++;	//increment current shots taken
+			System.out.println("Current shots:"+curShots);
+			player.getScreen().updateShots(shotsPerTurn-curShots);
+			shots.put(new Coordinate(x,y),false);	//add targeted coordinate to hashmap
+			this.player.setAttackData(x,y,dataValue.SHOT);
+			draw();	//draw targeted coordinates
+			 if (curShots==shotsPerTurn) {	//if all shots taken
+				System.out.println("All shots taken where shotsPerTurn = "+shotsPerTurn);
+				this.player.getScreen().getTimer().getStopButton().doClick();	//stop timer. 
+				attackGridListener = false;	//temporarily set attackgridlistener to false to avoid more clicks
+				System.out.println("attackGridListener set to "+attackGridListener);
+				curShots = 0;	//reset curShots
+				for(Coordinate c : shots.keySet()) {	
+					shots.put(c, player.getGame().getOppo(player).hit(c));	//update each shot with hit/miss
+				}
+				draw();	//draw hit and miss shots
+				shots.clear();
+				Player oppo = player.getGame().getOppo(player);
+				LinkedList<Ship> sunkShips = oppo.getSunkShips();
+				if(sunkShips.size() == 5) {
+					JOptionPane.showMessageDialog(this,"Congratulations! You win!");
+					System.out.println(player.getName()+" wins");
+					System.exit(0);
+				}
+				if(sunkShips.size()>this.oppoSunkShips) {
+					System.out.println("new ships sunk");
+					oppo.getScreen().getAttackBoard().decreaseCurShotsPerTurn(sunkShips.size()-this.oppoSunkShips);	//update current shots per turn for opponent player
+					oppoSunkShips = sunkShips.size();//update oppoSunkShips
+					this.player.getScreen().getFleetAttack().updateFleet(sunkShips, oppo);
+					oppo.getScreen().getFleetAttack().updateFleet(sunkShips, oppo);
+				}
+				//TODO update score of this player
+				//TODO pause this screen for some time
+				player.getScreen().setVisible(false);
+				attackGridListener = true;
+				oppo.getScreen().gamePlayScreen();
+				
+			}
+		}
+	}
 
-                    Point p = new Point(x,y);
-                    getJpanel(p);
-                    thePanel.setBackground(Color.GREEN);
-                }
-                if(temp[i][j]==2){
-                    int x = numberToPanel(i);
-                    int y = numberToPanel(j);
 
-                    Point p = new Point(x,y);
-                    getJpanel(p);
-                    thePanel.setBackground(Color.WHITE);
+	/**
+	 * decreases current shots per turn of this player by i, but keeps it minimum to 0 (so that same method can be used for both normal and salvo variations)
+	 * @param i	decrement
+	 */
+	public void decreaseCurShotsPerTurn(int i) {
+		if(this.shotsPerTurn - i > 0)
+			this.shotsPerTurn -= i;
+	}
 
-                }
-            }
-        }
-    }
-    
-    public int numberToPanel(int s){
-        int temp = (s-1)*20;
-        return temp;
-    }
+	/**
+	 * sets the current shots per turn of this player to i
+	 * @param i	specified current shots per turn
+	 */
+	public void setCurShotsPerTurn(int i) {
+		this.shotsPerTurn = i;
+	}
+	
+	/**
+	 * get current shots allowed per turn
+	 * @return maximum allowable shots per turn - number of shots already taken this turn
+	 */
+	public int getCurShotsPerTurn() {
+		return shotsPerTurn-curShots;
+	}
+	
+	/**
+	 * paint each cell of attack board
+	 * blue = available
+	 * dark gray = miss
+	 * red = hit
+	 * white = attempted shot
+	 */
+	public void draw() {
+		int temp[][] = this.player.getAttackData();
+		Color c = null;
+		for(int i=0;i<10;i++) {
+			for(int j=0;j<10;j++) {
+				if(temp[i][j]==0)
+					c = Color.blue;
+				else if (temp[i][j]==1)
+					c = Color.DARK_GRAY;
+				else if(temp[i][j]==2)
+					c = Color.red;
+				else if(temp[i][j]==3)
+					c=Color.white;
+				cells[j][i].setBackground(c);
+			}
+		}
+	}
 
-    public boolean getAttackBoardListener() {
-        return isAttackBoardListener;
-    }
-    public JPanel getComponentAt( Point p) {
-        Component comp = null;
-        for (Component child : self.getComponents()) {
-            if (child.getBounds().contains(p)) {
-                comp = child;
-            }
-        }
-        return (JPanel)comp;
-    }
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
