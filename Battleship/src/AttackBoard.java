@@ -107,7 +107,7 @@ public class AttackBoard extends JPanel implements MouseListener{
 				Player oppo = player.getGame().getOppo(player);
 				LinkedList<Ship> sunkShips = oppo.getSunkShips();
 				if(sunkShips.size() == 5) {
-					JOptionPane.showMessageDialog(this,"Congratulations! You win!");
+					JOptionPane.showMessageDialog(this,"Congratulations! "+player.getName()+" is the winner!");
 					System.out.println(player.getName()+" wins");
 					System.exit(0);
 				}

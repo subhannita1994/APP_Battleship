@@ -131,7 +131,7 @@ public class Computer extends Player{
 		screen.getTimer().getStopButton().doClick();
 		LinkedList<Ship> sunkShips = oppo.getSunkShips();
 		if(sunkShips.size() == 5) {
-			JOptionPane.showMessageDialog(screen,"Congratulations! You win!");
+			JOptionPane.showMessageDialog(screen,"Computer wins!");
 			System.out.println(this.getName()+" wins");
 			System.exit(0);
 		}

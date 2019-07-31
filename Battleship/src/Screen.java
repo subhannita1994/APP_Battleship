@@ -73,7 +73,7 @@ public class Screen extends JFrame implements ActionListener{
 	public void gamePlayScreen() {
 		if (firstGameP1==true) {
 			//if right after setup phase
-			JOptionPane.showMessageDialog(this,"Select 5 cells on your left board to hit your opponent. Click OK to start your timer.");
+			JOptionPane.showMessageDialog(this,"Select cells on your left board to hit your opponent. Click OK to start your timer.");
 			firstGameP1 = false;
 		}
 

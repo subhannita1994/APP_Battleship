@@ -145,7 +145,10 @@ public class Game extends JFrame implements ActionListener{
 			}
 			this.setVisible(false);
 			//TODO: game instructions
-			JOptionPane.showMessageDialog(this,"Set up your fleet by dragging ships to the board");
+			JOptionPane.showMessageDialog(this,"To set up a ship on your board : "
+					+ "Step 1 - select alignment of ship. "
+					+ "Step 2 - drag a ship and drop on to board. "
+					+ "On dragging to board, green cells will show if you can place the ship there");
 			player1.getScreen().getSelfBoard().setSelfGridListener(true);
 			try {
 				player1.getScreen().setUpScreen();
