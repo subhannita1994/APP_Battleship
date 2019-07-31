@@ -1,22 +1,27 @@
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class VerticalAlignmentTest {
-    private static boolean setUpIsDone = false;
+    Player p ;
+    Ship ship;
+    Game g;
+
     @Before
     public void setUp() throws Exception {
-        if (setUpIsDone) {
-            return;
-        }
+
+        g = new Game();
+        p = new Player("test", g);
+        ship = new Ship("Carrier",5);
     }
 
     @Test
     public void testAlignment()
     {
-        Game game = new Game();
-        assertEquals("VERTICAL",game.getAlignmentY());
+        boolean result = p.checkPossible(ship.getName(),ship.getSize(),1,1,Alignment.HORIZONTAL);
+        assertTrue(result);
     }
 
 }

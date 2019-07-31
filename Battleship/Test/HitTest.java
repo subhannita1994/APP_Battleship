@@ -5,7 +5,8 @@ import org.junit.Test;
 public class HitTest {
 
     Game game = new Game();
-    Player p = new Player();
+    String n;
+    Player p = new Player(n,game);
     Coordinate a,b,c;
     Ship s = new Ship(a,b,c);
 
