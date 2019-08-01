@@ -223,8 +223,8 @@ public class SelfBoard extends JPanel implements ActionListener{
 							ship.setLocation(coordinates);	//add this location to this ship
 							gt.getPlayer().addShip(ship, coordinates);	//add this ship to this player's fleet
 							draw();	//draw this ship on board
-							placedShips.add(ship.getName());
-							gt.disableAlignmentBtn(ship.getName());
+							placedShips.add(ship.getName());	//add this ship to placedShips
+							gt.disableAlignmentBtn(ship.getName());	//disable alignment button for this ship
 							gt.removeIcon(ship.getName());
 							System.out.println(placedShips.toString()+" are placed");
 							if(gt.getPlayer().getFleetSize()==5)
@@ -375,11 +375,12 @@ public class SelfBoard extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Alignment newAlignment;
+		Ship ship = shipInfo.get(((JComponent) e.getSource()).getClientProperty("shipName"));
+		
 		if(e.getActionCommand().equals(Alignment.HORIZONTAL.toString()))
 			newAlignment = Alignment.VERTICAL;
 		else
 			newAlignment = Alignment.HORIZONTAL;
-		Ship ship = shipInfo.get(((JComponent) e.getSource()).getClientProperty("shipName"));
 		ship.setAlignment(newAlignment);
 		((JToggleButton) e.getSource()).setText(newAlignment.toString());
 	}
