@@ -3,6 +3,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -75,5 +76,51 @@ public class Game {
 		else
 			return this.player1;
 	}
+	
+	public void startGameOnNetwork()
+	{
+		Player currentPlayer = this.getP1();
+		while(true)
+		{
+			//1. ask player to do attack
+			currentPlayer.askToDoAttack();
+			
+			//2. Process attck
+			if(currentPlayer.getCurShots() == currentPlayer.getTotalShots())
+			{
+				for(Coordinate c : currentPlayer.getShots().keySet()) {	
+					currentPlayer.getShots().put(c, this.getOppo(currentPlayer).hit(c));	//update each shot with hit/miss
+				}
+				
 
+				//draw();	//draw hit and miss shots
+				currentPlayer.getShots().clear();
+				Player oppo = this.getOppo(currentPlayer);
+				LinkedList<Ship> sunkShips = oppo.getSunkShips();
+				if(sunkShips.size() == 5) {
+					
+					//JOptionPane.showMessageDialog(this,"Congratulations! "+currentPlayer.getName()+" is the winner!");
+					System.out.println(currentPlayer.getName()+" wins");
+					System.exit(0);
+				}
+				
+				//HETAL to decide the flow
+				/*
+				if(sunkShips.size()>this.oppoSunkShips) {
+					System.out.println("new ships sunk");
+					oppo.getScreen().getAttackBoard().decreaseCurShotsPerTurn(sunkShips.size()-this.oppoSunkShips);	//update current shots per turn for opponent player
+					oppoSunkShips = sunkShips.size();//update oppoSunkShips
+					this.player.getScreen().getFleetAttack().updateFleet(sunkShips, oppo);
+					oppo.getScreen().getFleetAttack().updateFleet(sunkShips, oppo);
+				}*/
+				
+
+				//3. check mode else change player
+				currentPlayer = oppo;
+			}
+			
+			
+			
+		}
+	}
 }

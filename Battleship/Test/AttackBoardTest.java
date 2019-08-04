@@ -95,7 +95,7 @@ public class AttackBoardTest {
 		player1.addShip(destroyer1, coordinates);
 		player2.addShip(destroyer2, coordinates);
 		
-		attackBoard  = player1.getScreen().getAttackBoard();
+		//attackBoard  = player1.getScreen().getAttackBoard();
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class AttackBoardTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		player1.getScreen().getAttackBoard().setAttackGridListener(true);
+		//player1.getScreen().getAttackBoard().setAttackGridListener(true);
 	}
 
 	/**

@@ -45,8 +45,8 @@ public class SelfBoardTest {
 		//game.getNormalVariation().doClick();
 		//game.getStartBtn().doClick();
 		player1 = game.getP1();
-		player1.getScreen().getSelfBoard().setVisible(false);
-		selfBoard = player1.getScreen().getSelfBoard();
+		//player1.getScreen().getSelfBoard().setVisible(false);
+		//selfBoard = player1.getScreen().getSelfBoard();
 		selfBoard.setSelfGridListener(true);
 		player2 = game.getP2();
 	}

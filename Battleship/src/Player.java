@@ -22,12 +22,15 @@ public class Player {
 	
 	protected Game game;	//the associated game
 	protected String name;	
-	protected Screen screen;	//the associated screen	
 	protected HashMap<String,Ship> fleet;	//map of ship name to Ship object for quick retrieval
 	protected int[][] selfData = new int[10][10];	//0=available/not targeted, 1=miss, 2=ship exists&not targeted, 3=hit
 	protected int[][] attackData = new int[10][10];	//0=not yet targeted, 1=targeted shot, 2=hit, 3=miss
+	private HashMap<Coordinate,Boolean> shots = new HashMap<Coordinate,Boolean>();
 	
-	public Player(Socket sock,String n, Game game) {
+	private int shotsPerTurn = 5;
+	private int curShots = 0;
+	TextArea outputArea;
+	public Player(Socket sock,String n, Game game, TextArea outputArea) {
 		connection = sock;
 		try
 		{
@@ -47,6 +50,8 @@ public class Player {
 				selfData[i][j] =0;
 				attackData[i][j] =0;
 			}
+		
+		this.outputArea = outputArea;
 		System.out.println(name+" created");
 	}
 	
@@ -78,7 +83,7 @@ public class Player {
 		System.out.println(name+" created");
 	}
 	
-	public void ProcessPlacement(TextArea outputArea)
+	public void ProcessPlacement()
 	{
 		outputArea.append("Now processing settings for players");
 		while(true)
@@ -116,13 +121,37 @@ public class Player {
 				output.format("%s\n", getSelfDataString());
 				output.flush();
 				
-					//draw this ship on board
-				//placedShips.add(ship.getName());	//add this ship to placedShips
-				//gt.disableAlignmentBtn(ship.getName());	//disable alignment button for this ship
-				//gt.removeIcon(ship.getName());
-				//System.out.println(placedShips.toString()+" are placed");
-				//if(gt.getPlayer().getFleetSize()==5)
-				//	gt.getPlayer().getScreen().getSubmit().doClick();*/
+				//check fleet to check if placement if done
+				if(this.getFleetSize()==5)
+				{
+					//send client to wait for placement or attcck
+					output.format("%s\n", "waitforattck");
+					output.flush();
+					
+					Player oppo = this.getGame().getOppo(this);
+					if(this.getName().equals("Player 1")) {
+						if(oppo instanceof Computer) {	
+							((Computer) oppo).setUpFleet();	//AI setup fleet
+							
+							game.startGameOnNetwork();
+						}
+						else
+						{
+							//if player 2 is human, turn on it's self board listener
+							//Hetal decide what to do
+							//p2Screen.getSelfBoard().setSelfGridListener(true);
+						}
+					}
+					else {
+						//start game
+					}
+				}
+				else 
+				{	
+					//send cliet  to continue placement
+					output.format("%s\n", "continueplacement");
+					output.flush();
+				}
 			}
 		}
 	}
@@ -145,19 +174,6 @@ public class Player {
 		return coods;
 	}
 	
-	/**
-	 * create new screen for this player
-	 */
-	public void addScreen() {
-		this.screen = new Screen(this);
-	}
-	/**
-	 * return screen of this player
-	 * @return screen	the associated Screen object for this player
-	 */
-	public Screen getScreen() {
-		return this.screen;
-	}
 	/**
 	 * return associated game object
 	 * @return game		the associated Game object
@@ -253,6 +269,24 @@ public class Player {
 	public int[][] getAttackData() {
 		return this.attackData;
 	}
+	
+	/**
+	 * get attack data string
+	 */
+	public String getAttackString() {
+		StringBuffer sb = new StringBuffer();
+		for(int i=0;i<10;i++) {
+			if(i>0)
+				sb.append("|");
+			for(int j=0;j<10;j++)
+			{
+				if(j > 0)
+					sb.append(",");
+				sb.append(this.attackData[i][j]);
+			}
+		}
+		return sb.toString();
+	}
 
 	/**
 	 * set player's attackData[x][y] to corresponding value for dataValue(0=not yet targeted, 1=targeted shot, 2=hit, 3=miss)
@@ -276,7 +310,7 @@ public class Player {
 			temp=3;
 			break;
 		}
-		attackData[y][x] = temp;
+		attackData[x][y] = temp;
 		printAttackData();
 	}
 
@@ -348,23 +382,23 @@ public class Player {
 	 */
 	//
 	public boolean hit(Coordinate c) {
-		System.out.print("Hitting "+name+" at Coordinate:"+c.getX()+","+c.getY()+"--");
+		outputArea.append("Hitting "+name+" at Coordinate:"+c.getX()+","+c.getY()+"--\n");
 		for(Ship ship : fleet.values()) {
 			if(ship.hit(c)) {
 				selfData[c.getY()][c.getX()] = 3;
 				this.game.getOppo(this).setAttackData(c.getX(), c.getY(), dataValue.HIT);
-				System.out.println(name+"'s self data:");
+				outputArea.append(name+"'s self data:\n");
 				printSelfData();
-				System.out.println("Opponent's attack data:");
+				outputArea.append("Opponent's attack data:\n");
 				this.game.getOppo(this).printAttackData();
 				return true;
 			}
 		}
 		selfData[c.getY()][c.getX()] = 1;
 		game.getOppo(this).setAttackData(c.getX(), c.getY(), dataValue.MISS);
-		System.out.println(name+"'s self data:");
+		outputArea.append(name+"'s self data:");
 		printSelfData();
-		System.out.println("Opponent's attack data:");
+		outputArea.append("Opponent's attack data:");
 		this.game.getOppo(this).printAttackData();
 		return false;
 	}
@@ -407,8 +441,61 @@ public class Player {
 	public void printAttackData() {
 		for(int i=0;i<10;i++) {
 			for(int j=0;j<10;j++)
-				System.out.print(attackData[i][j]+" ");
-			System.out.println();
+				outputArea.append(attackData[i][j]+" ");
+			outputArea.append("\n");
+		}
+	}
+	
+	public void setCurShots(int value)
+	{
+		curShots = value;
+	}
+	
+	public int getCurShots()
+	{
+		return curShots;
+	}
+	
+	public int getTotalShots()
+	{
+		return shotsPerTurn;
+	}
+	
+	public HashMap<Coordinate,Boolean> getShots()
+	{
+		return shots;
+	}
+	
+	public void askToDoAttack()
+	{
+		outputArea.append("Waiting for " + this.getName() + " to do attck\n");
+		output.format("%s\n", "getattckdata");
+		output.flush();
+		
+		String attackString = input.nextLine();
+		outputArea.append(this.getName() + ": "+ attackString);
+		String[] temp = attackString.split("\\,",3);
+		if(temp[0].equals("attack"))
+		{
+			int x = Integer.parseInt(temp[1]);
+			int y = Integer.parseInt(temp[2]);
+			if(this.getAttackData()[x][y]!=0) {
+				outputArea.append("But this is already shot at before - so ignored\n");
+				
+				output.format("%s\n", "false|"+ this.getAttackString());
+				output.flush();
+			}
+			else 
+			{
+				
+				shots.put(new Coordinate(x,y) ,false);
+				this.setAttackData(x,y, dataValue.SHOT);
+				curShots++;
+				
+
+				output.format("%s\n", "true|" + this.getAttackString());
+				output.flush();
+			}
 		}
 	}
 }

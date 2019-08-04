@@ -89,13 +89,13 @@ public class AttackBoard extends JPanel implements MouseListener{
 			}
 			this.curShots++;	//increment current shots taken
 			System.out.println("Current shots:"+curShots);
-			player.getScreen().updateShots(shotsPerTurn-curShots);
+		//	player.getScreen().updateShots(shotsPerTurn-curShots);
 			shots.put(new Coordinate(x,y),false);	//add targeted coordinate to hashmap
 			this.player.setAttackData(x,y,dataValue.SHOT);
 			draw();	//draw targeted coordinates
 			 if (curShots==shotsPerTurn) {	//if all shots taken
 				System.out.println("All shots taken where shotsPerTurn = "+shotsPerTurn);
-				this.player.getScreen().getTimer().getStopButton().doClick();	//stop timer. 
+			//	this.player.getScreen().getTimer().getStopButton().doClick();	//stop timer. 
 				attackGridListener = false;	//temporarily set attackgridlistener to false to avoid more clicks
 				System.out.println("attackGridListener set to "+attackGridListener);
 				curShots = 0;	//reset curShots
@@ -113,16 +113,16 @@ public class AttackBoard extends JPanel implements MouseListener{
 				}
 				if(sunkShips.size()>this.oppoSunkShips) {
 					System.out.println("new ships sunk");
-					oppo.getScreen().getAttackBoard().decreaseCurShotsPerTurn(sunkShips.size()-this.oppoSunkShips);	//update current shots per turn for opponent player
+				//	oppo.getScreen().getAttackBoard().decreaseCurShotsPerTurn(sunkShips.size()-this.oppoSunkShips);	//update current shots per turn for opponent player
 					oppoSunkShips = sunkShips.size();//update oppoSunkShips
-					this.player.getScreen().getFleetAttack().updateFleet(sunkShips, oppo);
-					oppo.getScreen().getFleetAttack().updateFleet(sunkShips, oppo);
+				//	this.player.getScreen().getFleetAttack().updateFleet(sunkShips, oppo);
+					//oppo.getScreen().getFleetAttack().updateFleet(sunkShips, oppo);
 				}
 				//TODO update score of this player
 				//TODO pause this screen for some time
-				player.getScreen().setVisible(false);
+				//player.getScreen().setVisible(false);
 				attackGridListener = true;
-				oppo.getScreen().gamePlayScreen();
+				//oppo.getScreen().gamePlayScreen();
 				
 			}
 		}

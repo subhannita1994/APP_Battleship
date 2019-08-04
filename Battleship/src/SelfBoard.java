@@ -209,7 +209,7 @@ public class SelfBoard extends JPanel implements ActionListener{
 		 */
 		@Override
 		public void mouseReleased(MouseEvent e) {
-
+			/*
 			if(gt.getSelfGridListener()) {
 				if(gt.getShipTemp()!=null) {
 					try {
@@ -238,7 +238,7 @@ public class SelfBoard extends JPanel implements ActionListener{
 					gt.setShipTemp(null);
 				}
 			}
-
+	*/
 
 		}
 

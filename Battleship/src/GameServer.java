@@ -31,14 +31,14 @@ public class GameServer extends JFrame{
 		{
 			for ( int i = 0; i < players.length; i++ ) {
 				
-				players[i] = new Player( server.accept(), "Player " + (i+1), game);
+				players[i] = new Player( server.accept(), "Player " + (i+1), game, outputArea);
 				String mode = players[i].getInputStream().nextLine();
 				outputArea.append(mode + " selected by player\n");
 				if(mode.equals("computer"))
 				{
 					outputArea.append("Don't wait for another player. Play with computer\n");
 					game.setP1(players[i]);
-					game.setP2(new Computer("Computer Player",game));
+					game.setP2(new Computer(outputArea, "Computer Player",game));
 					break;
 				}
 				else 
@@ -56,7 +56,7 @@ public class GameServer extends JFrame{
 				}
 			}
 			
-			game.getP1().ProcessPlacement(outputArea);
+			game.getP1().ProcessPlacement();
 		}
 		catch (IOException e)
 		{	e.printStackTrace(); System.exit(1);	}

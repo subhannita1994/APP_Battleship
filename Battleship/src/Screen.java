@@ -171,6 +171,7 @@ public class Screen extends JFrame implements ActionListener{
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
+		/*
 		if(this.player.getFleetSize() < 5)
 			JOptionPane.showMessageDialog(this,"Fleet incomplete");
 		else {	//fleet complete 
@@ -200,7 +201,7 @@ public class Screen extends JFrame implements ActionListener{
 				p1Screen.gamePlayScreen();
 			}
 		}
-
+*/
 	}
 
 	/**

@@ -16,14 +16,14 @@ import javax.swing.JRootPane;
 public class PlayerScreenMouseListener extends MouseAdapter
 {
 
-	private PlayerScreen gt;
+	private PlacementPanel gt;
 	private LinkedList<String> placedShips;
 
 	/**
 	 * construct a mouse listener for the entire SelfBoard panel gt
 	 * @param gt	selfBoard panel
 	 */
-	public PlayerScreenMouseListener(PlayerScreen gt) {
+	public PlayerScreenMouseListener(PlacementPanel gt) {
 		this.gt = gt;
 		this.placedShips = new LinkedList<String>();
 	}
@@ -97,13 +97,19 @@ public class PlayerScreenMouseListener extends MouseAdapter
 							}
 						}
 					}
-					gt.draw(temp);;
+					gt.draw(temp);
 					placedShips.add(ship.getName());	//add this ship to placedShips
 					gt.disableAlignmentBtn(ship.getName());	//disable alignment button for this ship
 					gt.removeIcon(ship.getName());
 					System.out.println("Client: " + placedShips.toString()+" are placed");
-					//if(gt.getPlayer().getFleetSize()==5)
-					//	gt.getPlayer().getScreen().getSubmit().doClick();	//call this screen's actionPerformed(submit)
+					
+					//wait for server to do either continueplacement, waitforattack or continueattack
+					String instuction = gt.getInputStream().nextLine();
+					if(instuction.equals("waitforattck"))
+					{
+						gt.SetAttackPanel();
+						//Open attack panel
+					}
 					
 				}
 
