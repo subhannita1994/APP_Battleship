@@ -40,10 +40,10 @@ public class SelfBoardTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		game = new Game();
-		game.setVisible(false);
-		game.getHumanMode().doClick();
-		game.getNormalVariation().doClick();
-		game.getStartBtn().doClick();
+		//game.setVisible(false);
+		//game.getHumanMode().doClick();
+		//game.getNormalVariation().doClick();
+		//game.getStartBtn().doClick();
 		player1 = game.getP1();
 		player1.getScreen().getSelfBoard().setVisible(false);
 		selfBoard = player1.getScreen().getSelfBoard();
@@ -56,7 +56,7 @@ public class SelfBoardTest {
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		game.dispose();
+		//game.dispose();
 	}
 
 	/**

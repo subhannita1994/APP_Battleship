@@ -25,9 +25,9 @@ public class ComputerTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		game = new Game();
-		game.getNormalVariation().doClick();
-		game.getComputerMode().doClick();
-		game.getStartBtn().doClick();
+		//game.getNormalVariation().doClick();
+		//game.getComputerMode().doClick();
+		//game.getStartBtn().doClick();
 		player1 = game.getP1();
 		player2 = game.getP2();
 		

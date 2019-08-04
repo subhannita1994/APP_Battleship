@@ -26,12 +26,12 @@ public class GameTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		game = new Game();
-		game.setVisible(false);
+		//game.setVisible(false);
 		player1 = "Player 1";
 		player2 = "Player 2";
-		game.getNormalVariation().doClick();
-		game.getHumanMode().doClick();
-		game.getStartBtn().doClick();
+		//game.getNormalVariation().doClick();
+		//game.getHumanMode().doClick();
+		//game.getStartBtn().doClick();
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class GameTest {
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		game.dispose();
+		//game.dispose();
 	}
 
 	/**

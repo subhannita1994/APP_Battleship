@@ -35,10 +35,10 @@ public class PlayerTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		game = new Game();
-		game.setVisible(false);
-		game.getNormalVariation().doClick();
-		game.getHumanMode().doClick();
-		game.getStartBtn().doClick();
+		//game.setVisible(false);
+		//game.getNormalVariation().doClick();
+		//game.getHumanMode().doClick();
+		//game.getStartBtn().doClick();
 		player1 = game.getP1();
 		player2 = game.getP2();
 		expectedSelfData = new int[10][10];
@@ -78,7 +78,7 @@ public class PlayerTest {
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		game.dispose();
+		//game.dispose();
 	}
 
 	/**

@@ -1,5 +1,13 @@
+import java.awt.Color;
+import java.awt.TextArea;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  * Class containing player data : fleet information, attack data, etc
@@ -8,13 +16,50 @@ import java.util.LinkedList;
  */
 public class Player {
 
+	Socket connection;
+	Scanner input;
+	PrintStream output;
+	
 	protected Game game;	//the associated game
 	protected String name;	
 	protected Screen screen;	//the associated screen	
 	protected HashMap<String,Ship> fleet;	//map of ship name to Ship object for quick retrieval
 	protected int[][] selfData = new int[10][10];	//0=available/not targeted, 1=miss, 2=ship exists&not targeted, 3=hit
 	protected int[][] attackData = new int[10][10];	//0=not yet targeted, 1=targeted shot, 2=hit, 3=miss
-
+	
+	public Player(Socket sock,String n, Game game) {
+		connection = sock;
+		try
+		{
+			input = new Scanner(connection.getInputStream() );
+			output = new PrintStream(connection.getOutputStream() );
+		}
+		catch (IOException e)
+		{	
+			e.printStackTrace(); System.exit(1);	
+		}
+		
+		this.name = n;
+		this.game = game;
+		fleet = new HashMap<String,Ship>();
+		for(int i=0;i<10;i++)
+			for(int j=0;j<10;j++) {
+				selfData[i][j] =0;
+				attackData[i][j] =0;
+			}
+		System.out.println(name+" created");
+	}
+	
+	public Scanner getInputStream()
+	{
+		return input;
+	}
+	
+	public PrintStream getOutputStream()
+	{
+		return output;
+	}
+	
 	/**
 	 * Class constructor for a new player of name n.
 	 * Sets up the selfData as 0,i.e., available at all locations
@@ -31,6 +76,73 @@ public class Player {
 				attackData[i][j] =0;
 			}
 		System.out.println(name+" created");
+	}
+	
+	public void ProcessPlacement(TextArea outputArea)
+	{
+		outputArea.append("Now processing settings for players");
+		while(true)
+		{
+			String process = input.nextLine();
+			outputArea.append(process + "\n");
+			String[] temp = process.split(",");
+			if(temp[0].equals("checkPossible"))
+			{
+				int size = Integer.parseInt(temp[1]);
+				int x = Integer.parseInt(temp[2]);
+				int y = Integer.parseInt(temp[3]);
+				Alignment alignment = Enum.valueOf(Alignment.class, temp[4]);
+				
+				Boolean result = checkPossible(size, x, y, alignment);
+				output.format("%s\n", result);
+				output.flush();
+			
+			}
+			if(temp[0].equals("makeCoordinates"))
+			{
+				int x = Integer.parseInt(temp[1]);
+				int y = Integer.parseInt(temp[2]);
+				String shipname = temp[3];
+				Alignment alignment = Enum.valueOf(Alignment.class, temp[4]);
+				
+				Ship ship = game.getShipInfo().get(shipname);
+				ship.setAlignment(alignment);
+				Coordinate[] coordinates = makeCoordinates(x, y, ship.getName());	//make coordinates according to ship alignment
+				ship.setLocation(coordinates);	//add this location to this ship
+				addShip(ship, coordinates);	//add this ship to this player's fleet
+				
+				//send new coordinates to client
+				outputArea.append("Coordiates " + getSelfDataString());
+				output.format("%s\n", getSelfDataString());
+				output.flush();
+				
+					//draw this ship on board
+				//placedShips.add(ship.getName());	//add this ship to placedShips
+				//gt.disableAlignmentBtn(ship.getName());	//disable alignment button for this ship
+				//gt.removeIcon(ship.getName());
+				//System.out.println(placedShips.toString()+" are placed");
+				//if(gt.getPlayer().getFleetSize()==5)
+				//	gt.getPlayer().getScreen().getSubmit().doClick();*/
+			}
+		}
+	}
+	
+	public Coordinate[] makeCoordinates(int x, int y, String shipName) {
+		Ship ship = game.getShipInfo().get(shipName);
+		Coordinate[] coods = new Coordinate[ship.getSize()];
+		if(ship.getAlignment().equals(Alignment.HORIZONTAL)) {
+			for(int i=0;i<ship.getSize();i++) {
+				coods[i]= new Coordinate(x,y);
+				x++;
+			}
+		}
+		else {
+			for(int i=0;i<ship.getSize();i++) {
+				coods[i]= new Coordinate(x,y);
+				y++;
+			}
+		}
+		return coods;
 	}
 	
 	/**
@@ -234,6 +346,7 @@ public class Player {
 	 * @param c	Coordinate to be hit
 	 * @return	true if hit; otherwise false
 	 */
+	//
 	public boolean hit(Coordinate c) {
 		System.out.print("Hitting "+name+" at Coordinate:"+c.getX()+","+c.getY()+"--");
 		for(Ship ship : fleet.values()) {
@@ -270,6 +383,23 @@ public class Player {
 		}
 	}
 
+	/**
+	 * get sel data string
+	 */
+	public String getSelfDataString() {
+		StringBuffer sb = new StringBuffer();
+		for(int i=0;i<10;i++) {
+			if(i>0)
+				sb.append("|");
+			for(int j=0;j<10;j++)
+			{
+				if(j > 0)
+					sb.append(",");
+				sb.append(selfData[i][j]);
+			}
+		}
+		return sb.toString();
+	}
 
 	/**
 	 * print this player's attackData for debugging purposes
@@ -281,9 +411,4 @@ public class Player {
 			System.out.println();
 		}
 	}
-
-
-
-
-
 }

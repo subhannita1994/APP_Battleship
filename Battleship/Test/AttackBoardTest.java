@@ -42,9 +42,9 @@ public class AttackBoardTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		game = new Game();
-		game.getNormalVariation().doClick();
-		game.getHumanMode().doClick();
-		game.getStartBtn().doClick();
+		//game.getNormalVariation().doClick();
+		//game.getHumanMode().doClick();
+		//game.getStartBtn().doClick();
 		player1 = game.getP1();
 		player2 = game.getP2();
 
@@ -103,7 +103,7 @@ public class AttackBoardTest {
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		game.dispose();
+		//game.dispose();
 	}
 
 	/**

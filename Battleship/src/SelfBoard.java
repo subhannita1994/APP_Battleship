@@ -169,7 +169,8 @@ public class SelfBoard extends JPanel implements ActionListener{
 	 * @author Group 3
 	 * @version 1.2
 	 */
-	public class mouseListener extends MouseAdapter{
+	public class mouseListener extends MouseAdapter
+	{
 
 		private SelfBoard gt;
 		private LinkedList<String> placedShips;
@@ -291,6 +292,8 @@ public class SelfBoard extends JPanel implements ActionListener{
 
 	}
 
+	
+	
 	/**
 	 * repaint cells
 	 */
