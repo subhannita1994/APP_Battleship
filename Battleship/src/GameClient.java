@@ -35,7 +35,7 @@ public class GameClient
 	{
 		GameClient gc;
 		if ( args.length == 0 )
-			gc = new GameClient("127.0.0.1"); 
+			gc = new GameClient("172.30.121.252"); 
 		else
 			gc = new GameClient(args[0]);
 	}
