@@ -50,7 +50,7 @@ public class GameClient
 	{
 		GameClient gc;
 		if ( args.length == 0 )
-			gc = new GameClient("172.30.34.212");
+			gc = new GameClient("moore");
 		else
 			gc = new GameClient(args[0]);
 	}
