@@ -19,6 +19,11 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.LineBorder;
 
+/**
+ * This class will help in generating player screen for gameplay
+ * @author group3
+ * @version 3.0
+ */
 public class PlayerScreen extends JFrame {
 	private Socket connection;
 	private Scanner input; 
@@ -42,7 +47,10 @@ public class PlayerScreen extends JFrame {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
+
+	/**
+	 * setter for setting attack panel until attack phase is complete
+	 */
 	public void SetAttackPanel()
 	{
 		remove(mainPanel);
