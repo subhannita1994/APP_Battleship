@@ -3,6 +3,11 @@ import java.net.*;
 import java.util.Formatter;
 import java.util.Scanner;
 
+/**
+ * This class will allow to run client for different players
+ * @author group3
+ * @version 3.0
+ */
 public class GameClient 
 {
 	private Socket connection;
@@ -17,6 +22,11 @@ public class GameClient
 		//Create UI
 		
 	}
+
+	/**
+	 * establishing connection through socket
+	 *
+	 */
 	
 	public void StartConnection()
 	{
@@ -30,12 +40,17 @@ public class GameClient
 		}
 		WelcomeScreen ws = new WelcomeScreen(connection, input, output);
 	}
-	
+
+	/**
+	 * main function
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception
 	{
 		GameClient gc;
 		if ( args.length == 0 )
-			gc = new GameClient("172.30.121.252"); 
+			gc = new GameClient("172.30.34.212");
 		else
 			gc = new GameClient(args[0]);
 	}

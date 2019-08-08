@@ -12,7 +12,7 @@ import java.util.Scanner;
 /**
  * Class containing player data : fleet information, attack data, etc
  * @author Group 3
- * @version 1.2
+ * @version 3.0
  */
 public class Player {
 
@@ -50,16 +50,23 @@ public class Player {
 				selfData[i][j] =0;
 				attackData[i][j] =0;
 			}
-		
-		this.outputArea = outputArea;
+				this.outputArea = outputArea;
 		System.out.println(name+" created");
 	}
-	
+
+	/**
+	 * for input
+	 * @return
+	 */
 	public Scanner getInputStream()
 	{
 		return input;
 	}
-	
+
+	/**
+	 * for output
+	 * @return
+	 */
 	public PrintStream getOutputStream()
 	{
 		return output;
@@ -82,7 +89,10 @@ public class Player {
 			}
 		System.out.println(name+" created");
 	}
-	
+
+	/**
+	 * method for placing ships within the coordinate
+	 */
 	public void ProcessPlacement()
 	{
 		outputArea.append("Now processing settings for players");
@@ -155,7 +165,14 @@ public class Player {
 			}
 		}
 	}
-	
+
+	/**
+	 * Method for writing coordinates within board
+	 * @param x
+	 * @param y
+	 * @param shipName
+	 * @return
+	 */
 	public Coordinate[] makeCoordinates(int x, int y, String shipName) {
 		Ship ship = game.getShipInfo().get(shipName);
 		Coordinate[] coods = new Coordinate[ship.getSize()];
@@ -189,9 +206,6 @@ public class Player {
 	public String getName() {
 		return this.name;
 	}
-
-
-
 	/**
 	 * This method is called by the player's self board to add the specified Ship object at specified coordinates.
 	 * Ship already contains coordinates in its location (Ship.location)
@@ -245,8 +259,8 @@ public class Player {
 		return sunkShips;
 	}
 
-	/**
-	 * @return data of self board where 0=available/not targeted, 1=miss, 2=ship exists&not targeted, 3=hit
+	/** Data for current ship
+	 * @return temp
 	 */
 	public int[][] getSelfData(){
 		return this.selfData;
@@ -255,7 +269,7 @@ public class Player {
 	/**
 	 * update data of self board with value at specified coordinates
 	 * @param coordinates	array of Coordinate to be updated
-	 * @param value 	new integral value (0=available/not targeted, 1=miss, 2=ship exists & not targeted, 3=hit)
+	 * @param value 	new integral value
 	 */
 	public void updateSelfData(Coordinate[] coordinates, int value) {
 		for(Coordinate c : coordinates) 
@@ -263,7 +277,7 @@ public class Player {
 		printSelfData();
 	}
 
-	/**
+	/** getter for attack data
 	 * @return data of attack board where 0=not yet targeted, 1=targeted shot, 2=hit, 3=miss
 	 */
 	public int[][] getAttackData() {
@@ -272,6 +286,7 @@ public class Player {
 	
 	/**
 	 * get attack data string
+	 * @return
 	 */
 	public String getAttackString() {
 		StringBuffer sb = new StringBuffer();
@@ -315,10 +330,7 @@ public class Player {
 	}
 
 	/**
-	 * This method checks if a ship of specified size can be placed on the player's fleet while respecting the following constraints : 
-	 * 1. The entirety of a ship must be placed on the board, i.e., edge constraints
-	 * 2. No two ships cannot be placed next to one another,i.e., no two ships can have the same alignment & be right next to each another on the same horizontal/vertical line
-	 * 3. No two ships can overlap 
+	 * To check is ship is placed within the board within its alignment
 	 * @param shipSize	the size of this ship
 	 * @param x			the starting x coordinate
 	 * @param y			the starting y coordinate
@@ -418,7 +430,7 @@ public class Player {
 	}
 
 	/**
-	 * get sel data string
+	 * get self data string
 	 */
 	public String getSelfDataString() {
 		StringBuffer sb = new StringBuffer();
@@ -445,27 +457,46 @@ public class Player {
 			outputArea.append("\n");
 		}
 	}
-	
+
+	/**
+	 * making hits on the ship
+	 */
 	public void setCurShots(int value)
 	{
 		curShots = value;
 	}
-	
+
+	/**
+	 * to display number of hit shots
+	 * @return
+	 */
 	public int getCurShots()
 	{
 		return curShots;
 	}
+
+	/**
+	 * getter to display total shots
+	 * @return
+	 */
 	
 	public int getTotalShots()
 	{
 		return shotsPerTurn;
 	}
-	
+
+	/**
+	 * Hashmap for storing hits
+	 * @return
+	 */
 	public HashMap<Coordinate,Boolean> getShots()
 	{
 		return shots;
 	}
-	
+
+	/**
+	 * Method will be called when another player waiting for their turn
+	 */
 	public void askToDoAttack()
 	{
 		outputArea.append("Waiting for " + this.getName() + " to do attck\n");

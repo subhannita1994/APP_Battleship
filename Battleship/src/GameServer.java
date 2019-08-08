@@ -4,6 +4,11 @@ import java.net.*;
 import java.util.Scanner;
 import javax.swing.*;
 
+/**
+ * This class is running game server which allows for playing multiplayer game
+ * @version 3.0
+ * @author group3
+ */
 public class GameServer extends JFrame{
 
 	private ServerSocket server;
@@ -24,6 +29,10 @@ public class GameServer extends JFrame{
 		setSize(500, 500);
 		setVisible(true);	
 	}
+
+	/**
+	 * method for executing server
+	 */
 
 	public void execute()
 	{
@@ -61,10 +70,18 @@ public class GameServer extends JFrame{
 		catch (IOException e)
 		{	e.printStackTrace(); System.exit(1);	}
 	}
+
+	/**
+	 * main method for executing server
+	 * @param args
+	 * @throws Exception
+	 */
 	
 	public static void main(String[] args) throws Exception 
 	{
 		GameServer gs = new GameServer();
-		gs.execute();
+		gs.
+
+				execute();
 	}                    
 }

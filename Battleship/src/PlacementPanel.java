@@ -19,6 +19,12 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.LineBorder;
 
+/**
+ * This class allows for placing ships into panel
+ * @version 3.0
+ * @author group3
+ */
+
 public class PlacementPanel extends JPanel implements ActionListener{
 	private Socket connection;
 	private Scanner input; 
@@ -123,6 +129,10 @@ public class PlacementPanel extends JPanel implements ActionListener{
 		
 	}
 
+	/**
+	 * Action performed event for aligning ship within its coordinate horizontally or vertically
+	 * @param e
+	 */
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -149,24 +159,21 @@ public class PlacementPanel extends JPanel implements ActionListener{
 	
 	/**
 	 * set the current ship being dragged
-	 * @param shipName	name/ID of the ship
+	 * @param shipName
 	 */
 	public void setShipTemp(String shipName) {
 		System.out.println("ship type set to "+shipName);
 		this.shipTemp = shipInfo.get(shipName);
 	}
 	
-	/**
-	 * @return	the current ship being dragged, null if no ship is being dragged or mouse is released onto non-droppable component
-	 */
+
 	public Ship getShipTemp() {
 		return this.shipTemp;
 	}
 	
 	/**
 	 * repaint cells when ships is dragged over them, provided ship can be placed there
-	 * @param iStart	starting y coordinate
-	 * @param jStart	starting x coordinate
+	 * @param temp
 	 */
 	public void draw(int[][] temp) {
 		Color c = null;
@@ -184,6 +191,14 @@ public class PlacementPanel extends JPanel implements ActionListener{
 			}
 		}
 	}
+
+	/**
+	 * Method for returning ship coordinates and ship name
+	 * @param x
+	 * @param y
+	 * @param shipName
+	 * @return
+	 */
 	
 	public Coordinate[] makeCoordinates(int x, int y, String shipName) {
 		Ship ship = shipInfo.get(shipName);
@@ -206,7 +221,7 @@ public class PlacementPanel extends JPanel implements ActionListener{
 
 	/**
 	 * disable alignment button for this ship
-	 * @param name	Name/Identifier of ship
+	 * @param name
 	 */
 	public void disableAlignmentBtn(String name) {
 		for(JToggleButton b : alignmentBtns)
@@ -220,7 +235,7 @@ public class PlacementPanel extends JPanel implements ActionListener{
 
 	/**
 	 * remove icon of placed ship
-	 * @param name 	Name/Identifier of ship
+	 * @param name
 	 */
 	public void removeIcon(String name) {
 		for(JPanel p : shipPanels)
@@ -229,7 +244,11 @@ public class PlacementPanel extends JPanel implements ActionListener{
 				return;
 			}	
 	}
-	
+
+	/**
+	 * setter for setting attack panel
+	 *
+	 */
 	public void SetAttackPanel()
 	{
 		PlayerScreen frame = (PlayerScreen) this.frame;
