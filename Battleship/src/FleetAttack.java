@@ -10,7 +10,7 @@ import java.net.URL;
 /**
  * class for displaying the ships panel in attack phase
  * @author Group 3
- * @version 1.2
+ * @version 3.0
  */
 public class FleetAttack extends JPanel {
 	private JPanel panel;
@@ -44,7 +44,7 @@ public class FleetAttack extends JPanel {
 		System.out.println("Attack panel for "+p.getName()+" created");
 	}
 
-	/**
+	/** JPanel returning current panel
 	 * @return	this panel
 	 */
 	public JPanel getPanel() {

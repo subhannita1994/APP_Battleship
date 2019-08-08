@@ -1,3 +1,4 @@
+import java.awt.TextArea;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -13,7 +14,28 @@ public class Computer extends Player{
 	private LinkedList<Ship> shipInfo = new LinkedList<Ship>();	//list of ship objects
 	private int oppoSunkShips;	//number of sunk ships in opponent's fleet
 	private HashMap<String, Integer> afloatShips = new HashMap<String,Integer>();	//list of healthy ships in opponent's fleet
-
+	
+	/**
+	 * Constructs a new Computer object with name n and associated with game
+	 * @param n	Name or ID of this Computer object
+	 * @param game	Game object this is associated with
+	 */
+	public Computer(TextArea outputArea,String n, Game game) {
+		super(n, game);
+		this.outputArea = outputArea;
+		shipInfo.add(new Ship("Carrier",5));
+		shipInfo.add(new Ship("Battleship",4));
+		shipInfo.add(new Ship("Cruiser",3));
+		shipInfo.add(new Ship("Submarine",3));
+		shipInfo.add(new Ship("Destroyer",2));
+		afloatShips.put("Carrier",5);
+		afloatShips.put("Battleship",4);
+		afloatShips.put("Cruiser",3);
+		afloatShips.put("Submarine",3);
+		afloatShips.put("Destroyer",2);
+		this.oppoSunkShips = 0;
+	}
+	
 	/**
 	 * Constructs a new Computer object with name n and associated with game
 	 * @param n	Name or ID of this Computer object
@@ -65,7 +87,7 @@ public class Computer extends Player{
 					System.out.println(c.getX()+","+c.getY());
 				ship.setLocation(coordinates);
 				super.addShip(ship, coordinates);
-				screen.getSelfBoard().draw();
+				//screen.getSelfBoard().draw();
 				shipInfo.removeFirst();
 			}
 		}
@@ -112,26 +134,27 @@ public class Computer extends Player{
 
 		int i =0;
 		int x = 0,y = 0;
+		
 		Player oppo = super.getGame().getOppo(this);
 		LinkedList<int[]> probDist = attackStrategy();
 		while(i!=n) {
 			int[] temp = probDist.removeLast();
 			x = temp[0];
 			y = temp[1];
-			if(attackData[y][x]==0) {
+			if(attackData[x][y]==0) {
 				System.out.println("AI: selected shot -"+x+","+y);
 				super.setAttackData(x, y, dataValue.SHOT);
-				Coordinate c = new Coordinate(x,y);
-				oppo.hit(c);
-				screen.getAttackBoard().draw();
+				//Coordinate c = new Coordinate(x,y);
+				//oppo.hit(c);
+				//screen.getAttackBoard().draw();
 				i++;
 			}
 		}
-		System.out.println("All shots taken where shotsPerTurn = "+screen.getAttackBoard().getCurShotsPerTurn());
-		screen.getTimer().getStopButton().doClick();
+		//System.out.println("All shots taken where shotsPerTurn = "+screen.getAttackBoard().getCurShotsPerTurn());
+		//screen.getTimer().getStopButton().doClick();
 		LinkedList<Ship> sunkShips = oppo.getSunkShips();
 		if(sunkShips.size() == 5) {
-			JOptionPane.showMessageDialog(screen,"Computer wins!");
+			//JOptionPane.showMessageDialog(screen,"Computer wins!");
 			System.out.println(this.getName()+" wins");
 			System.exit(0);
 		}
@@ -140,15 +163,16 @@ public class Computer extends Player{
 				this.afloatShips.remove(s.getName());
 			}
 			System.out.println("new ships sunk");
-			oppo.getScreen().getAttackBoard().decreaseCurShotsPerTurn(sunkShips.size()-this.oppoSunkShips);	//update current shots per turn for opponent player
+			//oppo.getScreen().getAttackBoard().decreaseCurShotsPerTurn(sunkShips.size()-this.oppoSunkShips);	//update current shots per turn for opponent player
 			oppoSunkShips = sunkShips.size();//update oppoSunkShips
-			screen.getFleetAttack().updateFleet(sunkShips, oppo);
-			oppo.getScreen().getFleetAttack().updateFleet(sunkShips, oppo);
+			//screen.getFleetAttack().updateFleet(sunkShips, oppo);
+			//oppo.getScreen().getFleetAttack().updateFleet(sunkShips, oppo);
 		}
+		this.setCurShots(n);
 		//TODO update score of this player
 		//TODO pause this screen for some time
-		screen.setVisible(false);
-		oppo.getScreen().gamePlayScreen();
+		//screen.setVisible(false);
+		//oppo.getScreen().gamePlayScreen();
 
 	}
 
@@ -321,20 +345,20 @@ public class Computer extends Player{
 		while(i!=n) {
 			int x = r.nextInt(10);
 			int y = r.nextInt(10);
-			if(attackData[y][x]==0) {
+			if(attackData[x][y]==0) {
 				System.out.println("AI: selected shot -"+x+","+y);
 				super.setAttackData(x, y, dataValue.SHOT);
 				Coordinate c = new Coordinate(x,y);
 				oppo.hit(c);
-				screen.getAttackBoard().draw();
+				//screen.getAttackBoard().draw();
 				i++;
 			}
 		}
-		System.out.println("All shots taken where shotsPerTurn = "+screen.getAttackBoard().getCurShotsPerTurn());
-		screen.getTimer().getStopButton().doClick();
+		//System.out.println("All shots taken where shotsPerTurn = "+screen.getAttackBoard().getCurShotsPerTurn());
+		//screen.getTimer().getStopButton().doClick();
 		LinkedList<Ship> sunkShips = oppo.getSunkShips();
 		if(sunkShips.size() == 5) {
-			JOptionPane.showMessageDialog(screen,"Congratulations! You win!");
+			//JOptionPane.showMessageDialog(screen,"Congratulations! You win!");
 			System.out.println(this.getName()+" wins");
 			System.exit(0);
 		}
@@ -343,60 +367,31 @@ public class Computer extends Player{
 				this.afloatShips.remove(s.getName());
 			}
 			System.out.println("new ships sunk");
-			oppo.getScreen().getAttackBoard().decreaseCurShotsPerTurn(sunkShips.size()-this.oppoSunkShips);	//update current shots per turn for opponent player
+			//oppo.getScreen().getAttackBoard().decreaseCurShotsPerTurn(sunkShips.size()-this.oppoSunkShips);	//update current shots per turn for opponent player
 			oppoSunkShips = sunkShips.size();//update oppoSunkShips
-			screen.getFleetAttack().updateFleet(sunkShips, oppo);
-			oppo.getScreen().getFleetAttack().updateFleet(sunkShips, oppo);
+			//screen.getFleetAttack().updateFleet(sunkShips, oppo);
+			//oppo.getScreen().getFleetAttack().updateFleet(sunkShips, oppo);
 		}
 		//TODO update score of this player
 		//TODO pause this screen for some time
-		screen.setVisible(false);
+		//screen.setVisible(false);
 		for(i=0;i<10;i++)
 			for(int j=0;j<10;j++)
 				if(attackData[i][j]==2) {
-					screen.setFirstGameP2(false);
+					//screen.setFirstGameP2(false);
 					break;
 				}
-		oppo.getScreen().gamePlayScreen();
+		//oppo.getScreen().gamePlayScreen();
 
-
+		
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	/**
+	 * Method for printing message about who is attacking
+	 */
+	public void askToDoAttack()
+	{
+		outputArea.append("Computer is doing attack : ");
+		attack(this.getTotalShots());
+	}
 }

@@ -41,7 +41,7 @@ public class Screen extends JFrame implements ActionListener{
 
 	/**
 	 * set up screen for setUp phase, i.e., during ship placement
-	 * @throws InterruptedException
+	 * @author group3
 	 */
 	public void setUpScreen() throws InterruptedException {
 		if(setUp) {
@@ -111,13 +111,14 @@ public class Screen extends JFrame implements ActionListener{
 	 * sets a flag if Computer has found a hit on opponent's board so that correct strategy is applied
 	 * When true, Computer attacks random cells
 	 * Once Computer finds a hit, the flag is set so that from the next time onwards it hits according to probability distribution
-	 * @param b true if computer has not hit anything yet, false otherwise
+	 *
 	 */
 	public void setFirstGameP2(boolean b) {
 		firstGameP2 = b;
 	}
 
 	/**
+	 * to return self board of the current state
 	 * @return self board (where player's ships are placed)
 	 */
 	public SelfBoard getSelfBoard() {
@@ -125,6 +126,7 @@ public class Screen extends JFrame implements ActionListener{
 	}
 
 	/**
+	 * to return attack board where player shots are played
 	 * @return attack board (where player is selecting shots to target)
 	 */
 	public AttackBoard getAttackBoard() {
@@ -132,6 +134,7 @@ public class Screen extends JFrame implements ActionListener{
 	}
 
 	/**
+	 * return fleet attack
 	 * @return center panel which shows the status of self and enemy ship health
 	 */
 	public FleetAttack getFleetAttack() {
@@ -139,6 +142,7 @@ public class Screen extends JFrame implements ActionListener{
 	}
 
 	/**
+	 * timer for gameplay
 	 * @return	timer of this player
 	 */
 	public timer getTimer() {
@@ -148,7 +152,7 @@ public class Screen extends JFrame implements ActionListener{
 	/**
 	 * Useful to control game play.
 	 * For example, once the second player ship placement is complete, this method is called to initiate attack phase
-	 * @return	hidden submit button of screen which is deliberately fired to move on to next phase
+	 *
 	 */
 	public JButton getSubmit() {
 		return this.submit;
@@ -156,7 +160,7 @@ public class Screen extends JFrame implements ActionListener{
 
 	/**
 	 * This method is called by player's timer object to set the text
-	 * @return timer label of this player 
+	 *
 	 */
 	public JLabel getTimerLabel() {
 		return this.timerLabel;
@@ -171,6 +175,7 @@ public class Screen extends JFrame implements ActionListener{
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
+		/*
 		if(this.player.getFleetSize() < 5)
 			JOptionPane.showMessageDialog(this,"Fleet incomplete");
 		else {	//fleet complete 
@@ -200,12 +205,12 @@ public class Screen extends JFrame implements ActionListener{
 				p1Screen.gamePlayScreen();
 			}
 		}
-
+*/
 	}
 
 	/**
 	 * update the text of "Shots left:" panel
-	 * @param sh number of shots left this turn
+	 *
 	 */
 	public void updateShots(int sh) {
 		this.shots.setText("Shots left: "+sh);

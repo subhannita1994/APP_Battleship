@@ -1,30 +1,33 @@
 /*
  * Class enclosing x and y coordinates
  * @author Group 3
- * @version 1.2
+ * @version 3.0
  */
 public class Coordinate {
 
 	private int x;
 	private int y;
-	
-	//constructs a new coordinate at (x,y) 
+
+	/**constructs a new coordinate at (x,y)
+	 * @param x
+	 * @param y
+	 */
 	public Coordinate(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 	
-	//return x or column number
+	/**return x or column number */
 	public int getX() {
 		return this.x;
 	}
 	
-	//return y or row number
+	/**return y or row number */
 	public int getY() {
 		return this.y;
 	}
 	
-	//Overridden equals(Object) to implement comparison of two coordinates
+	/**Overridden equals(Object) to implement comparison of two coordinates */
 	@Override
 	public boolean equals(Object o) {
 		if(!(o instanceof Coordinate))
@@ -36,7 +39,9 @@ public class Coordinate {
 			return false;
 	}
 	
-	//Overridden hashCode() to implement comparison of two coordinates
+	/**Overridden hashCode() to implement comparison of two coordinates
+	 *
+	 */
 	@Override
 	public int hashCode() {
 		int result = 17;
