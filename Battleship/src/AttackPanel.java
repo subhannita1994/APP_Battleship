@@ -15,6 +15,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * This class will define the attack panel and help in defining methods for attack phase
+ * @author group3
+ * @version 3.0
+ */
+
 public class AttackPanel extends JPanel implements MouseListener{
 
 	private Socket connection;
@@ -56,7 +62,7 @@ public class AttackPanel extends JPanel implements MouseListener{
 
 	/**
 	 * set the attackGridListener
-	 * @param b true if attackBoard is supposed to listen; false otherwise
+	 * @param b 	boolean value
 	 */
 	public void setAttackGridListener(boolean b) {
 		this.attackGridListener = b;
@@ -138,9 +144,15 @@ public class AttackPanel extends JPanel implements MouseListener{
 	}
 
 	/**
+	 * repaint cells when ships is dragged over them, provided ship can be placed there  	
+	 */
+	public void draw() {
+		draw();
+	}
+
+	/**
 	 * repaint cells when ships is dragged over them, provided ship can be placed there
-	 * @param iStart	starting y coordinate
-	 * @param jStart	starting x coordinate
+	 * @param temp		new temporary argument
 	 */
 	public void draw(int[][] temp) {
 		Color c = null;
@@ -160,6 +172,10 @@ public class AttackPanel extends JPanel implements MouseListener{
 	}
 
 
+	/**
+	 * This method is called when mouse is invoked
+	 * @param arg0
+	 */
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
@@ -167,20 +183,30 @@ public class AttackPanel extends JPanel implements MouseListener{
 	}
 
 
+	/**
+	 * Exiting the invoked event will make this method call
+	 * @param arg0
+	 */
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-
+	/**
+	 * Invoked when mouse button is pressed
+	 * @param arg0
+	 */
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-
+	/**
+	 * Invoked when mouse is being released
+	 * @param arg0
+	 */
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub

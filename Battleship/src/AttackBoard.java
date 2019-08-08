@@ -7,7 +7,7 @@ import java.util.LinkedList;
 /**
  * Class representing attack board of each player
  * @author Group 3
- * @version 1.2
+ * @version 3.0
  */
 public class AttackBoard extends JPanel implements MouseListener{
 
@@ -211,21 +211,21 @@ public class AttackBoard extends JPanel implements MouseListener{
 		
 	}
 	/**
-	 * 
+	 * Method for returning panel board
 	 * @return the attack board
 	 */
 	public JPanel getPanel() {
 		return self;
 	}
 	/**
-	 * 
+	 * method for turning shorts
 	 * @return number of shots taken this turn
 	 */
 	public int getCurShotsTaken() {
 		return curShots;
 	}
 	/**
-	 * 
+	 * method for getting array of cells
 	 * @return board cells
 	 */
 	public JPanel[][] getCells(){

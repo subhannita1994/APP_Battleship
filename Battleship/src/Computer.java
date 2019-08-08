@@ -385,7 +385,10 @@ public class Computer extends Player{
 
 		
 	}
-	
+
+	/**
+	 * Method for printing message about who is attacking
+	 */
 	public void askToDoAttack()
 	{
 		outputArea.append("Computer is doing attack : ");
