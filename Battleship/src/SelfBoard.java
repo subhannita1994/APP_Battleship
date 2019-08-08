@@ -135,7 +135,7 @@ public class SelfBoard extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * 
+	 * JPanel return method
 	 * @return 	this panel
 	 */
 	public JPanel getPanel() {
@@ -151,6 +151,7 @@ public class SelfBoard extends JPanel implements ActionListener{
 		this.shipTemp = shipInfo.get(shipName);
 	}
 	/**
+	 * getting temporary ship
 	 * @return	the current ship being dragged, null if no ship is being dragged or mouse is released onto non-droppable component
 	 */
 	public Ship getShipTemp() {
@@ -158,6 +159,7 @@ public class SelfBoard extends JPanel implements ActionListener{
 	}
 
 	/**
+	 * return player object
 	 * @return the associated Player object
 	 */
 	public Player getPlayer() {
@@ -167,7 +169,7 @@ public class SelfBoard extends JPanel implements ActionListener{
 	/**
 	 * class to listen to mouse events all across the panel
 	 * @author Group 3
-	 * @version 1.2
+	 * @version 3.0
 	 */
 	public class mouseListener extends MouseAdapter
 	{
@@ -328,6 +330,7 @@ public class SelfBoard extends JPanel implements ActionListener{
 	}
 
 	/**
+	 * setting listener for grid
 	 * @return true if this self board should be responding to mouse events (during fleet placement phase), false otherwise (during attack phase)
 	 */
 	public boolean getSelfGridListener() {
@@ -418,18 +421,21 @@ public class SelfBoard extends JPanel implements ActionListener{
 	}
 	
 	/**
+	 * jpanel for returning current cells
 	 * @return board cells
 	 */
 	public JPanel[][] getCells(){
 		return cells;
 	}
 	/**
+	 * linkedlist for button
 	 * @return list of alignment buttons
 	 */
 	public LinkedList<JToggleButton> getAlignmentButtons(){
 		return this.alignmentBtns;
 	}
 	/**
+	 * hashmap for returning ship information
 	 * @return map of ship names to Ship objects
 	 */
 	public HashMap<String,Ship> getShips() {

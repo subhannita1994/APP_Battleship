@@ -6,7 +6,7 @@ import java.util.HashMap;
 /**
  * Class containing ship size and location
  * @author Group 3
- * @version 1.2
+ * @version 3.0
  */
 public class Ship {
 
@@ -16,7 +16,10 @@ public class Ship {
 	private HashMap<Coordinate,Boolean> hit;
 	private Alignment alignment;
 
-	//constructs new ship of size s, name n, alignment horizontal and empty location coordinates
+	/**constructs new ship of size s, name n, alignment horizontal and empty location coordinates
+	 * @param n
+	 * @param s
+	 */
 	public Ship(String n, int s) {
 		this.name = n;
 		this.size = s;
@@ -25,22 +28,34 @@ public class Ship {
 		this.hit = new HashMap<Coordinate,Boolean>();
 	}
 
-	//return name of this ship
+	/**
+	 * return name of this ship
+	*/
 	public String getName() {
 		return this.name;
 	}
 
-	//return size of this ship
+	/**
+	 * return size of this ship
+	 * @return size
+	 */
 	public int getSize() {
 		return this.size;
 	}
 
-	//return array of Coordinates of this ship
+	/**
+	 * return array of Coordinates of this ship
+	 * @return location
+	 */
 	public Coordinate[] getLocation() {
 		return this.location;
 	}
 
-	//check if ship is hit at Coordinate c and return true if hit, else return false. Also, update its hashmap (hit) if hit
+	/**
+	 * check if ship is hit at Coordinate c and return true if hit, else return false. Also, update its hashmap (hit) if hit
+	 * @param c
+	 * @return true
+	 */
 	public boolean hit(Coordinate c) {
 		if(this.hit.containsKey(c)) {
 			this.hit.put(c, true);
@@ -50,7 +65,10 @@ public class Ship {
 		return false;
 	}
 
-	//return true if ship is sunk else return false
+	/**
+	 * return true if ship is sunk else return false
+	 * @return false
+	 */
 	public boolean isSunk() {
 		if(hit.containsValue(false))
 			return false;
@@ -58,24 +76,35 @@ public class Ship {
 			return true;
 	}
 
-	//return alignment of ship
+	/**
+	 * return alignment of ship
+	 * @return
+	 */
 	public Alignment getAlignment() {
 		return this.alignment;
 	}
 
-	//set alignment of ship
+	/**
+	 * set alignment of ship
+	 * @param a
+	 */
 	public void setAlignment(Alignment a) {
 		this.alignment = a;
 	}
 
-	//set location of ship to coordinates
+	/**
+	 * set location of ship to coordinates
+	 * @param coordinates
+	 */
 	public void setLocation(Coordinate[] coordinates) {
 		this.location = coordinates;
 		for(Coordinate c : coordinates)
 			hit.put(c,false);
 	}
 
-	//set location of ship to null,i.e., when ship is not yet placed on board
+	/**
+	 * set location of ship to null,i.e., when ship is not yet placed on board
+	 */
 	public void clearLocation() {
 		Arrays.fill(location, null);
 		for(Coordinate c : hit.keySet())
