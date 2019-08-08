@@ -17,6 +17,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+/**
+ * Class for defining welcome screen for allowing user in selecting gameplay option
+ * @author group3
+ * @version 3.0
+ */
+
 public class WelcomeScreen extends JFrame implements ActionListener{
 	
 	private JRadioButton salvoVariation;
@@ -83,8 +89,7 @@ public class WelcomeScreen extends JFrame implements ActionListener{
 	 * Action listener to start button to initiate game setup.
 	 * Displays error message if one of {salvo, normal} variations and one of {human, computer} mode not selected.
 	 * Creates Player objects accordingly and their respective screens.
-	 * @param	e	ActionEvent corresponding to start button
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 * @param	e
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -123,6 +128,7 @@ public class WelcomeScreen extends JFrame implements ActionListener{
 				output.flush();
 				//player1.getScreen().getAttackBoard().setCurShotsPerTurn(1);
 				//player2.getScreen().getAttackBoard().setCurShotsPerTurn(1);
+
 			}
 			this.setVisible(false);
 			PlayerScreen ps = new PlayerScreen(connection, input, output, variation.getSelection().getActionCommand());
@@ -142,6 +148,7 @@ public class WelcomeScreen extends JFrame implements ActionListener{
 	}
 
 	/**
+	 * Method for radiobutton
 	 * @return the salvoVariation radio button for deliberate clicks during testing
 	 */
 	public JRadioButton getSalvoVariation() {
@@ -149,6 +156,7 @@ public class WelcomeScreen extends JFrame implements ActionListener{
 	}
 
 	/**
+	 * method for normal variation
 	 * @return the normalVariation radio button for deliberate clicks during testing
 	 */
 	public JRadioButton getNormalVariation() {
@@ -156,6 +164,7 @@ public class WelcomeScreen extends JFrame implements ActionListener{
 	}
 
 	/**
+	 * method for returning computer state
 	 * @return the computerMode radio button for firing deliberate clicks during testing
 	 */
 	public JRadioButton getComputerMode() {
@@ -163,6 +172,7 @@ public class WelcomeScreen extends JFrame implements ActionListener{
 	}
 
 	/**
+	 * method for returning human state
 	 * @return the humanMode radio button for firing deliberate clicks during testing
 	 */
 	public JRadioButton getHumanMode() {
@@ -170,6 +180,7 @@ public class WelcomeScreen extends JFrame implements ActionListener{
 	}
 
 	/**
+	 * method for button start
 	 * @return the start button to initiate game and firing deliberate clicks during 	testing
 	 */
 	public JButton getStartBtn() {
