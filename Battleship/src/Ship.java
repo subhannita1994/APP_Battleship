@@ -1,88 +1,84 @@
 
-/**
- * @author Danil Kolesnikov danil.kolesnikov@sjsu.edu
- * @author Minh Phan minh.phan@sjsu.edu
- * CS 151 HW4 Fall 2017
- */
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+/**
+ * Class containing ship size and location
+ * @author Group 3
+ * @version 1.2
+ */
 public class Ship {
 
-    Coordinate a;
-    Coordinate b;
-    Coordinate c;
+	private String name;
+	private int size;
+	private Coordinate[] location;
+	private HashMap<Coordinate,Boolean> hit;
+	private Alignment alignment;
 
-    // Boolean should be true if the point was hit by another player
-    boolean aHit;
-    boolean bHit;
-    boolean cHit;
+	//constructs new ship of size s, name n, alignment horizontal and empty location coordinates
+	public Ship(String n, int s) {
+		this.name = n;
+		this.size = s;
+		this.alignment = Alignment.HORIZONTAL;
+		this.location = new Coordinate[size];
+		this.hit = new HashMap<Coordinate,Boolean>();
+	}
 
-    // Constructor
-    Ship(Coordinate a,Coordinate b,Coordinate c){
-        this.a = a;
-        this.b = b;
-        this.c = c;
-    }
+	//return name of this ship
+	public String getName() {
+		return this.name;
+	}
 
-    //compare ships to check if they are the same
-    public boolean compareShip(Ship ship){
-        if(ship.getA().compareCoord(this.a) && ship.getB().compareCoord(this.b) && ship.getC().compareCoord(this.c)){
-            return true;
-        }
-        return false;
-    }
+	//return size of this ship
+	public int getSize() {
+		return this.size;
+	}
 
-    public Coordinate getA() {
-        return a;
-    }
+	//return array of Coordinates of this ship
+	public Coordinate[] getLocation() {
+		return this.location;
+	}
 
-    public Coordinate getB() {
-        return b;
-    }
+	//check if ship is hit at Coordinate c and return true if hit, else return false. Also, update its hashmap (hit) if hit
+	public boolean hit(Coordinate c) {
+		if(this.hit.containsKey(c)) {
+			this.hit.put(c, true);
+			System.out.print(name+":"+this.hit.get(c));
+			return true;
+		}
+		return false;
+	}
 
-    public Coordinate getC() {
-        return c;
-    }
+	//return true if ship is sunk else return false
+	public boolean isSunk() {
+		if(hit.containsValue(false))
+			return false;
+		else
+			return true;
+	}
 
-    // Sets booleans to true if the
-    public boolean isPointHit(Coordinate hit){
-        if(hit.getX() == a.getX()&&hit.getY() == a.getY()){
-            return true;
-        }
-        else if(hit.getX() == b.getX()&&hit.getY() == b.getY()){
-            return true;
-        }
-        else if(hit.getX() == c.getX()&&hit.getY() == c.getY()){
-            return true;
-        }
-        return false;
-    }
+	//return alignment of ship
+	public Alignment getAlignment() {
+		return this.alignment;
+	}
 
-    //call hit to attack the ship
-    public void Hit(Coordinate hit){
-        if(hit.getY() == a.getY() && hit.getX() == a.getX()){
-            aHit =true;
-        }
-        if(hit.getY() == b.getY() && hit.getX() == b.getX()){
-            bHit =true;
-        }
-        if(hit.getY() == c.getY() && hit.getX() == c.getX()){
-            cHit =true;
-        }
-    }
+	//set alignment of ship
+	public void setAlignment(Alignment a) {
+		this.alignment = a;
+	}
 
-    //check if the ship is sunk
-    public boolean isShipSunk(){
-        if(aHit && bHit && cHit){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+	//set location of ship to coordinates
+	public void setLocation(Coordinate[] coordinates) {
+		this.location = coordinates;
+		for(Coordinate c : coordinates)
+			hit.put(c,false);
+	}
 
-    // Debugging functions
-    public void printShip(){
-        String result = "A("+a.getX()+", "+a.getY()+")"+" B("+b.getX()+", "+b.getY()+") C("+c.getX()+", "+c.getY()+")";
-        System.out.print(result);
-    }
+	//set location of ship to null,i.e., when ship is not yet placed on board
+	public void clearLocation() {
+		Arrays.fill(location, null);
+		for(Coordinate c : hit.keySet())
+			hit.remove(c);
+	}
 }
