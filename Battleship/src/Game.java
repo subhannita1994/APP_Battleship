@@ -16,7 +16,7 @@ import javax.swing.JRadioButton;
 /**
  * Main driver class of Battleship Game
  * @author Group 3
- * @version 1.2
+ * @version 3.0
  */
 public class Game {
 
@@ -25,7 +25,8 @@ public class Game {
 	private HashMap<String,Ship> shipInfo = new HashMap<String,Ship>();
 
 	/**
-	 * Class constructor setting up the GUI of the initial welcome screen 
+	 * Class constructor setting up the GUI of the initial welcome screen
+	 *
 	 */
 	public Game() {
 
@@ -53,20 +54,21 @@ public class Game {
 	}
 	
 	/**
+	 * Method for player 1 details
 	 * @return the first player
 	 */
 	public Player getP1() {
 		return this.player1;
 	}
 
-	/**
+	/** Method for player 2 details
 	 * @return the second player
 	 */
 	public Player getP2() {
 		return this.player2;
 	}
 
-	/**
+	/** Opponent player details for identifying
 	 * @param	p	a player
 	 * @return the opponent of the specified player
 	 */
@@ -76,6 +78,10 @@ public class Game {
 		else
 			return this.player1;
 	}
+
+	/**
+	 * Setting the gameplay on Network with two players
+	 */
 	
 	public void startGameOnNetwork()
 	{
@@ -103,8 +109,6 @@ public class Game {
 					System.out.println(currentPlayer.getName()+" wins");
 					System.exit(0);
 				}
-				
-				//HETAL to decide the flow
 				/*
 				if(sunkShips.size()>this.oppoSunkShips) {
 					System.out.println("new ships sunk");
@@ -118,9 +122,6 @@ public class Game {
 				//3. check mode else change player
 				currentPlayer = oppo;
 			}
-			
-			
-			
 		}
 	}
 }
